@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { useEffect, useState } from "react";
+import RecordView from "./Components/RecordView";
+
+
+export default function App() {
+  const [videos, setVideos] = useState([])
+
+  useEffect(()=>{
+    fetch('/api/videos').then(res => res.json()).then(data => setVideos(data))
+  }, [])
+
+  return (  
+  <div className="app">
+      <RecordView />
+      {videos[0] && videos.map()}
+      
+  </div>
+    )
+
 }
-
-export default App;
