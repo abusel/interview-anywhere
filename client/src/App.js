@@ -13,7 +13,9 @@ export default function App() {
   return (  
   <div className="app">
       <RecordView />
-      {videos[0] && videos.map()}
+     {videos[0] && videos.map((video)=>{
+      return <div> <video src={video.url} controls width={800} /> <p>{video.duration}</p></div>
+     })}
       
   </div>
     )

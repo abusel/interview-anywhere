@@ -1,6 +1,7 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
+import getBlobDuration from 'get-blob-duration'
 
 //https://api.cloudinary.com/v1_1/abusel
 
@@ -23,8 +24,8 @@ import { ReactMediaRecorder } from "react-media-recorder";
 function RecordView(){
   const data = new FormData()
   const [url, setUrl] = useState('')
-  const [startTime, setStartTime] = useState('')
-  const [endTime, setEndTime] = useState('')
+  const [duration, setDuration] = useState('')
+  const testRef = useRef()
 
 
   useEffect(()=>{
@@ -37,10 +38,10 @@ function RecordView(){
         },
         body:JSON.stringify({
           url: url,
-          duration: (endTime - startTime)/1000
+          duration: duration
         })
       })
-  }, [endTime])
+  }, [url])
     
     return     (
             <div>
@@ -52,6 +53,9 @@ function RecordView(){
                   data.append('file', blob)
                   data.append("upload_preset", "test-video")
                   data.append("cloud_name","abusel")
+                  getBlobDuration(blob).then(function(dur) {
+                    setDuration(dur)
+                  });
                   fetch(" https://api.cloudinary.com/v1_1/abusel/video/upload",{
                   method:"post",
                   body: data
@@ -59,7 +63,6 @@ function RecordView(){
                   .then(resp => resp.json())
                   .then(data => {
                   setUrl(data.url)
-                  setEndTime(Date.now())
                   })
                   .catch(err => console.log(err))
                   }
@@ -69,7 +72,6 @@ function RecordView(){
                     <h2>Recourse Recording Demo</h2>
                     <p>{status}</p>
                     <button onClick={()=>{
-                      setStartTime(Date.now())
                       startRecording()
                       }}>Start Recording</button>
                     <button onClick={stopRecording}>Stop Recording</button>
@@ -90,10 +92,10 @@ function RecordView(){
                       // fetch('http://res.cloudinary.com/abusel/video/upload/v1641849510/imxmssfgxmdrh6y7c8fo.mkv')
                       // .then(res=> res.)
                       // console.log(mediaBlobUrl)
-                      console.log((endTime - startTime)/ 1000)
-                      }}>Log</button>
+                      testRef.current.play()
+                      }}>play</button>
                     <div>
-                      <video src={'http://res.cloudinary.com/abusel/video/upload/v1641849840/csb9sioizzppae77s8xl.mkv'} controls autoplay loop width={800} />
+                      <video ref={testRef} src={mediaBlobUrl} controls autoplay  width={800} />
           
                     </div>
                     <div></div>
