@@ -1,10 +1,18 @@
 class Api::UsersController < ApplicationController
+    # skip_before_action :authorize, only: :create
     def create
         user = User.create!(user_params)
-        # user.video.attach(params[:video])
-        Cloudinary::Uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
-  :public_id => "olympic_flag")
+        session[:user_id] = user.id
         render json: user, status: :created
+    end
+
+    def show
+        user = User.find(session[:user_id])
+        if user
+            render json: user, status: :created
+        else
+            render json: {error: 'unauthorized'}, status: :unauthorized
+        end
     end
 
     def index
@@ -14,6 +22,6 @@ class Api::UsersController < ApplicationController
 
     private
     def user_params
-        params.permit(:name, :video)
+        params.permit(:name, :email, :is_company, :password)
     end
 end

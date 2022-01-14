@@ -2,6 +2,10 @@
 import { useEffect, useState, useRef } from "react";
 import { ReactMediaRecorder } from "react-media-recorder";
 import getBlobDuration from 'get-blob-duration'
+import {Button} from '@material-ui/core';
+import {useHistory} from 'react-router-dom'
+
+
 
 //https://api.cloudinary.com/v1_1/abusel
 
@@ -21,15 +25,18 @@ import getBlobDuration from 'get-blob-duration'
 
   
 // })
-function RecordView(){
+function RecordView({type, job,  post, questions, setQuestions}){
   const data = new FormData()
-  const [url, setUrl] = useState('')
   const [duration, setDuration] = useState('')
+  const [url, setUrl] = useState('')
+
+
   const testRef = useRef()
+  let history = useHistory()
 
 
   useEffect(()=>{
-      url && fetch('/api/videos', 
+      url && fetch('/api/questions', 
       {
         method: 'POST',
         headers: {
@@ -37,11 +44,19 @@ function RecordView(){
           'Content-Type': 'application/json'
         },
         body:JSON.stringify({
-          url: url,
-          duration: duration
+          link: url,
+          duration: duration,
+          job_id: job.id
         })
+      }).then(res => res.json()).then(data => {
+        type === 'q2' && setQuestions([...questions, data])
+        console.log(data)
+      }
+      
+      ). then(()=> {
+        type === 'q1' && history.push(`/create/${job.title}`)
       })
-  }, [url])
+  }, [post])
     
     return     (
             <div>
@@ -71,11 +86,11 @@ function RecordView(){
                   <div>
                     <h2>Recourse Recording Demo</h2>
                     <p>{status}</p>
-                    <button onClick={()=>{
+                    <Button color="primary" variant="contained" onClick={()=>{
                       startRecording()
-                      }}>Start Recording</button>
-                    <button onClick={stopRecording}>Stop Recording</button>
-                    <button onClick={()=> {
+                      }}>Start Recording</Button>
+                    <Button color="primary" variant="contained" onClick={stopRecording}>Stop Recording</Button>
+                    <Button color="primary" variant="contained" onClick={()=> {
                       // fetch('/api/users', 
                       // {
                       //   method: 'POST',
@@ -93,10 +108,9 @@ function RecordView(){
                       // .then(res=> res.)
                       // console.log(mediaBlobUrl)
                       testRef.current.play()
-                      }}>play</button>
+                      }}>play</Button>
                     <div>
-                      <video ref={testRef} src={mediaBlobUrl} controls autoplay  width={800} />
-          
+                      <video ref={testRef} src={mediaBlobUrl ? mediaBlobUrl : url} controls autoplay  width={800} />
                     </div>
                     <div></div>
                   </div>
