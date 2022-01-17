@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom'
 
 const steps = ['Name the Job', 'Create First Question', 'Finalize'];
 
-export default function CreateQuestion({setJob, job}) {
+export default function CreateQuestion({setJob, job, user}) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [jobTitle, setJobTitle] = useState('')
@@ -53,11 +53,14 @@ export default function CreateQuestion({setJob, job}) {
             },
             body: JSON.stringify({
                 title: jobTitle,
-                allow_multiple_attempts: false
+                allow_multiple_attempts: false,
+                user_id: user.id
             })
-          }).then(res => res.json()).then(data => setJob(data)).then(()=>setPost(post => !post)).then(()=>
+          }).then(res => res.json()).then(data => 
+            setJob(data)).then(()=>setPost(post => !post)).then(()=>
           {
-            // history.push(`/create/${jobTitle}`)
+            //history.push(`/create/${jobTitle}`)
+  
 
           })
     }

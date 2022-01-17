@@ -1,14 +1,12 @@
 class Api::JobsController < ApplicationController
     def index
-        user = User.find(session[:user_id])
-        jobs = user.jobs
+        jobs = Job.all
         render json: jobs, status: :ok
     end
 
     def create
-        user = User.find(session[:user_id])
-        recipe = user.jobs.create!(job_params)
-        render json: recipe, status: :created
+        job = Job.create!(job_params)
+        render json: job, status: :created
     end
 
     def show

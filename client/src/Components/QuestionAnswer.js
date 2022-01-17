@@ -4,11 +4,42 @@ import {Button} from '@material-ui/core';
 import getBlobDuration from 'get-blob-duration'
 
 
-function QuestionAnswer({jobId, question}){
+function QuestionAnswer({interview, question, test}){
     const data = new FormData()
     const [duration, setDuration] = useState('')
     const [url, setUrl] = useState('')
     const testRef = useRef()
+    const [post, setPost] = useState(false)
+
+
+
+    useEffect(()=>{
+        url && fetch('/api/answers', 
+        {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify({
+            link: url,
+            duration: duration,
+            interview_id: interview.id
+          })
+        }).then(res => res.json()).then(data => {
+          console.log(data)
+        }
+        
+        )
+
+    
+    }, [post])
+
+    useEffect(()=>{
+        setTimeout(()=> {
+            testRef.current.click()
+        }, question.duration * 1000)
+    }, [test])
 
     return (
         <>
@@ -16,9 +47,9 @@ function QuestionAnswer({jobId, question}){
         <video src={question.link} autoPlay></video>
 
         <ReactMediaRecorder
-              
               video
               audio={true}
+           
               onStop={(blobURL, blob)=> {
                 data.append('file', blob)
                 data.append("upload_preset", "test-video")
@@ -33,7 +64,7 @@ function QuestionAnswer({jobId, question}){
                 .then(resp => resp.json())
                 .then(data => {
                 setUrl(data.url)
-                })
+                }).then(()=> setPost(post => !post))
                 .catch(err => console.log(err))
                 }
               }
@@ -41,11 +72,11 @@ function QuestionAnswer({jobId, question}){
                 <div>
                   <h2>Recourse Recording Demo</h2>
                   <p>{status}</p>
-                  <Button color="primary" variant="contained" onClick={()=>{
+                  <p    ref={testRef}   onClick={()=>{
                     startRecording()
-                    }}>Start Recording</Button>
+                    }}></p>
                   <Button color="primary" variant="contained" onClick={stopRecording}>Stop Recording</Button>
-                  <Button color="primary" variant="contained" onClick={()=> {
+                  {/* <Button color="primary" variant="contained" onClick={()=> {
                     // fetch('/api/users', 
                     // {
                     //   method: 'POST',
@@ -62,10 +93,8 @@ function QuestionAnswer({jobId, question}){
                     // fetch('http://res.cloudinary.com/abusel/video/upload/v1641849510/imxmssfgxmdrh6y7c8fo.mkv')
                     // .then(res=> res.)
                     // console.log(mediaBlobUrl)
-                    testRef.current.play()
-                    }}>play</Button>
+                    }}>play</Button> */}
                   <div>
-                    <video ref={testRef} src={mediaBlobUrl ? mediaBlobUrl : url} controls autoplay  width={800} />
                   </div>
                   <div></div>
                 </div>

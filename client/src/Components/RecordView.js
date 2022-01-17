@@ -52,7 +52,6 @@ function RecordView({type, job,  post, questions, setQuestions}){
         type === 'q2' && setQuestions([...questions, data])
         console.log(data)
       }
-      
       ). then(()=> {
         type === 'q1' && history.push(`/create/${job.title}`)
       })

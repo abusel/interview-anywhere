@@ -19,10 +19,12 @@ function CompanyHome({user,setJob}){
             <div>
                 <h3>View Posted Jobs</h3>
                 {jobs[0] && 
-                <ul>{jobs.map(job => {
+                <ul>{jobs.filter(job => {
+                    return job.user_id === user.id
+                }).map(job => {
                    return  <li onClick={()=> {
                        setJob(job)
-                       history.push(`/${job.title}`)
+                       history.push(`/${job.id}`)
                    }}>{job.title}</li>
                     })}</ul>}
 

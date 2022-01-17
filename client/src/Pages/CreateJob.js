@@ -8,7 +8,7 @@ function CreateJob({user, job, setJob}){
         <div>
             <h3>Create a new job</h3>
             <h4>{job.title}</h4>
-            <CreateQuestion setJob={setJob} job={job} />
+            <CreateQuestion setJob={setJob} job={job} user={user}/>
         </div>
     )
 }

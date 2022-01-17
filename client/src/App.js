@@ -10,12 +10,14 @@ import CompanyHome from "./Pages/CompanyHome";
 import CreateJob from './Pages/CreateJob';
 import ViewJob from "./Pages/ViewJob";
 import TakeInterview from './Pages/TakeInterview'
+import ViewInterview from "./Pages/ViewInterview";
 
 
 export default function App() {
   const [videos, setVideos] = useState([])
   const [user, setUser] = useState('')
   const [job, setJob] = useState('')
+  const [interview, setInterview] = useState('')
   let history = useHistory()
 
 
@@ -73,7 +75,10 @@ export default function App() {
         <ViewJob job={job} setJob={setJob} adding={true}/>
       </Route>
       <Route exact path='/:job'>
-        <ViewJob job={job} setJob={setJob} adding={false}/>
+        <ViewJob job={job} setJob={setJob} adding={false} interview={interview} setInterview={setInterview}/>
+      </Route>
+      <Route exact path='/interview/:interviewId'>
+        <ViewInterview user={user} interview={interview} setInterview={setInterview}/>
       </Route>
     </Switch>
  

@@ -8,14 +8,23 @@ function TakeInterview({user}){
     const [jobId, setJobId] = useState('')
     const [interview, setInterview] = useState('')
     const [questions, setQuestions] = useState([])
+    const [questionNum, setQuestionNum] = useState(0)
+    let question = (questionNum) => <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum}/>
+
 
     const params = useParams()
+
+
+
+    useEffect(()=>{
+     
+    }, [questionNum])
     
     function startInterview(){
 
         console.log({
             jobId: jobId
-        })
+        }, questions)
         fetch('/api/interviews', {
             method: 'POST',
             headers: {
@@ -26,7 +35,11 @@ function TakeInterview({user}){
                 job_id: jobId,
                 user_id: user.id
             })
-        }).then(r => r.json()).then(data => setInterview(data))
+        }).then(r => {
+            if (r.ok){
+                return r.json()
+            }
+        }).then(data => setInterview(data))
     }
 
     useEffect(
@@ -35,13 +48,17 @@ function TakeInterview({user}){
     );
     useEffect(()=>{
         fetch(`/api/jobs/${jobId}`).then(res => res.json()).then(data => setQuestions(data.questions))
-    }, [jobId])
+    }, [jobId, setJobId])
     return (
         <div>
             job_id: {jobId}
             <Button onClick={startInterview}>Start Interview</Button>
-            {interview && <QuestionAnswer interview={interview} question={questions[0]}/>
+            {
+                interview && questions && question(questionNum)
             }
+            
+            
+            <Button onClick={()=> setQuestionNum(questionNum => questionNum + 1)}>Next Question</Button>
         </div>
     )
 }

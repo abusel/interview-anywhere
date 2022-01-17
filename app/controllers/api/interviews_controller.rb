@@ -10,6 +10,16 @@ class Api::InterviewsController < ApplicationController
         render json: interview
     end
 
+    def show
+        interview = Interview.find(params[:id])
+        render json: interview
+    end
+
+    def showjob
+        interviews =  Interview.where(job_id: params[:id])
+        render json: interviews
+    end
+
 
     private
     def interview_params
