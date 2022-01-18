@@ -4,7 +4,7 @@ import {Button} from '@material-ui/core';
 import getBlobDuration from 'get-blob-duration'
 
 
-function QuestionAnswer({interview, question, test}){
+function QuestionAnswer({interview, question, test, hide, setHide}){
     const data = new FormData()
     const [duration, setDuration] = useState('')
     const [url, setUrl] = useState('')
@@ -38,13 +38,13 @@ function QuestionAnswer({interview, question, test}){
     useEffect(()=>{
         setTimeout(()=> {
             testRef.current.click()
-        }, question.duration * 1000)
+        }, (question.duration * 1000 + 200))
     }, [test])
 
     return (
         <>
-        <div>asd;lfkj</div>
-        <video src={question.link} autoPlay></video>
+
+ 
 
         <ReactMediaRecorder
               video
@@ -74,8 +74,10 @@ function QuestionAnswer({interview, question, test}){
                   {status === 'recording' && <h2> Start talking now!</h2>}
                   <p    ref={testRef}   onClick={()=>{
                     startRecording()
+                    setHide(true)
                     }}></p>
                   <Button color="primary" variant="contained" onClick={stopRecording}>Stop Recording</Button>
+                 { !hide && <video src={question.link} autoPlay></video>}
                   {/* <Button color="primary" variant="contained" onClick={()=> {
                     // fetch('/api/users', 
                     // {

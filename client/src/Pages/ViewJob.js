@@ -111,7 +111,9 @@ function ViewJob({job, setJob, adding, interview, setInterview}){
                      sx={{ width: 300 }}
                      renderInput={(params) => <TextField {...params} label="Applicant" />}
                    />
-                   <Button onClick={()=> history.push(`/interview/${interview.id}`)}>View Interview</Button>
+                   <Button onClick={()=> {
+                       interview && history.push(`/interview/${interview.id}`)
+                       }}>View Interview</Button>
                    </div>
                 }
             </>}

@@ -9,7 +9,9 @@ function TakeInterview({user}){
     const [interview, setInterview] = useState('')
     const [questions, setQuestions] = useState([])
     const [questionNum, setQuestionNum] = useState(0)
-    let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum}/> : <div>Done!</div>
+    const [hide, setHide] = useState(false)
+    let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide}/> : <div>Done!</div>
+
 
 
     const params = useParams()
@@ -58,7 +60,10 @@ function TakeInterview({user}){
             }
             
             
-            <Button onClick={()=> setQuestionNum(questionNum => questionNum + 1)}>Next Question</Button>
+            <Button onClick={()=> {
+                setQuestionNum(questionNum => questionNum + 1)
+                setHide(false)
+                }}>Next Question</Button>
         </div>
     )
 }

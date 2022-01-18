@@ -93,7 +93,10 @@ export default function CreateQuestion({setJob, job, user}) {
 
   return (
     <>
-    {activeStep === 0 && <Input value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title'/>}
+    {activeStep === 0 && <div>
+        <p>Please Name the Job</p>
+        <Input value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title'/>
+        </div>}
     {activeStep > 0 && <RecordView type='q1' job={job} post={post} />}
     <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep}>
