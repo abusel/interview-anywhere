@@ -12,6 +12,7 @@ import ViewJob from "./Pages/ViewJob";
 import TakeInterview from './Pages/TakeInterview'
 import ViewInterview from "./Pages/ViewInterview";
 import UserHome from "./Pages/UserHome";
+import NavBar from "./Components/NavBar";
 
 
 export default function App() {
@@ -63,22 +64,30 @@ export default function App() {
     <Switch>
       <Route exact path='/'>
         <div className="app">
+          <NavBar logoutFunc={logoutFunc} user={user}/>
         {user.name}
-        <Button onClick={logoutFunc}>Log out</Button>
         <CompanyHome user={user} setJob={setJob}/>
         </div>
       </Route>
+
       <Route exact path='/create'>
-        <Button onClick={logoutFunc}>Log out</Button>
+        <NavBar logoutFunc={logoutFunc} user={user}/>
+
         <CreateJob user={user} job={job} setJob={setJob}/>
       </Route>
+
       <Route exact path='/create/:createdJob'>
+         <NavBar logoutFunc={logoutFunc} user={user}/>
         <ViewJob job={job} setJob={setJob} adding={true}/>
       </Route>
+
       <Route exact path='/:job'>
+         <NavBar logoutFunc={logoutFunc} user={user}/>
         <ViewJob job={job} setJob={setJob} adding={false} interview={interview} setInterview={setInterview}/>
       </Route>
+      
       <Route exact path='/interview/:interviewId'>
+       <NavBar logoutFunc={logoutFunc} user={user}/>
         <ViewInterview user={user} interview={interview} setInterview={setInterview}/>
       </Route>
     </Switch>
@@ -88,14 +97,15 @@ export default function App() {
   if (!user.is_company) return (
     <Switch>
       <Route exact path='/'>
+      <NavBar logoutFunc={logoutFunc} user={user}/>
       <div className="app">
-      <Button onClick={logoutFunc}>Log out</Button>
       <UserHome user={user}/>
      {videos[0] && videos.map((video)=>{
       return <div key={video.id}> <video  src={video.url} controls width={800} /> <p>{video.duration}</p></div>
      })}
     </div>
       </Route>
+      <NavBar logoutFunc={logoutFunc} user={user}/>
       <Route exact path='/interview/:jobId'>
         <TakeInterview user={user}/>
       </Route>
