@@ -9,7 +9,7 @@ function TakeInterview({user}){
     const [interview, setInterview] = useState('')
     const [questions, setQuestions] = useState([])
     const [questionNum, setQuestionNum] = useState(0)
-    let question = (questionNum) => <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum}/>
+    let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum}/> : <div>Done!</div>
 
 
     const params = useParams()

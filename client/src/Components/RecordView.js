@@ -83,8 +83,7 @@ function RecordView({type, job,  post, questions, setQuestions}){
                 }
                 render={({ status, startRecording, stopRecording, mediaBlobUrl, previewStream }) => (
                   <div>
-                    <h2>Recourse Recording Demo</h2>
-                    <p>{status}</p>
+                    {status === 'recording' && <h2> Start talking now!</h2>}
                     <Button color="primary" variant="contained" onClick={()=>{
                       startRecording()
                       }}>Start Recording</Button>

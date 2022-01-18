@@ -70,8 +70,8 @@ function QuestionAnswer({interview, question, test}){
               }
               render={({ status, startRecording, stopRecording, mediaBlobUrl, previewStream }) => (
                 <div>
-                  <h2>Recourse Recording Demo</h2>
                   <p>{status}</p>
+                  {status === 'recording' && <h2> Start talking now!</h2>}
                   <p    ref={testRef}   onClick={()=>{
                     startRecording()
                     }}></p>

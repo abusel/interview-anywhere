@@ -11,6 +11,7 @@ import CreateJob from './Pages/CreateJob';
 import ViewJob from "./Pages/ViewJob";
 import TakeInterview from './Pages/TakeInterview'
 import ViewInterview from "./Pages/ViewInterview";
+import UserHome from "./Pages/UserHome";
 
 
 export default function App() {
@@ -88,9 +89,8 @@ export default function App() {
     <Switch>
       <Route exact path='/'>
       <div className="app">
-      hello {user.name}
       <Button onClick={logoutFunc}>Log out</Button>
-      <RecordView />
+      <UserHome user={user}/>
      {videos[0] && videos.map((video)=>{
       return <div key={video.id}> <video  src={video.url} controls width={800} /> <p>{video.duration}</p></div>
      })}

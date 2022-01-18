@@ -1,8 +1,14 @@
-import { Button } from "@mui/material";
+import { Accordion, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RecordView from "../Components/RecordView";
 import {useHistory} from 'react-router-dom'
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 
 function ViewJob({job, setJob, adding, interview, setInterview}){
@@ -11,8 +17,11 @@ function ViewJob({job, setJob, adding, interview, setInterview}){
     const [questions, setQuestions] = useState([])
     const [post, setPost] = useState(false)
     const [interviews, setInterviews] = useState([])
+    const [counter, setCounter] = useState(1)
+    const [selectedInterviewId, setSelectedInterviewId] = useState('')
     let history = useHistory()
 
+ 
 
 
     useEffect(()=>{
@@ -33,34 +42,77 @@ function ViewJob({job, setJob, adding, interview, setInterview}){
     return(
         <div>
             {job.title}
+
+
+
+            <div>  
+                <h3>View Questions:</h3>
             {
                 questions && questions.map(q =>{
+                  
                     return (
+                       
+                          <Accordion>
+                          <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                      >
+                        <Typography>Question {questions.indexOf(q) +1}</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
                         <div>
-                            <h3>Question</h3>
-                            <video src={q.link} controls autoplay  width={600}/>
+                           <video src={q.link} controls autoplay  width={600}/>
                         </div>
+                        </Typography>
+                      </AccordionDetails>
+                          </Accordion>
+
+
                     )
                 })
             }
+            </div>  
+
+
            { adding ? <><RecordView type='q2' questions={questions} setQuestions={setQuestions} post={post} job= {job} />
             <Button onClick={()=>setPost(post => !post)}>Add Question</Button>
             <Button onClick={()=> history.push(`/`)}> Publish</Button>
             </> : <>
                 <h3> Link: http://localhost:4000/interview/{job.id}</h3>
+                <h3>Interview Code: {job.id}</h3>
                 <h5>View Interviews</h5>
-                {
+                {/* {
                     <ul>
                         {
                             interviews[0] && interviews.map(interview => {
                                 return  <li onClick={()=> {
-                                    history.push(`/interview/${interview.id}`)
+                                    // history.push(`/interview/${interview.id}`)
+                                    console.log(interview)
                                     setInterview(interview)
                                 }}>{interview.user.name}</li>
                             })
                         }
                     </ul>
                     
+                } */}
+
+                {
+                     interviews[0] && <div> <Autocomplete
+                     disableClearable
+                     onChange={(e, newValue)=> {
+                            setInterview(newValue)
+                        }}
+                     disablePortal
+                     id="combo-box-demo"
+                     options={interviews}
+                     getOptionLabel={(option) => option.user.name}
+                     sx={{ width: 300 }}
+                     renderInput={(params) => <TextField {...params} label="Applicant" />}
+                   />
+                   <Button onClick={()=> history.push(`/interview/${interview.id}`)}>View Interview</Button>
+                   </div>
                 }
             </>}
             
