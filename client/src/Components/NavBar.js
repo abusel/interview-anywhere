@@ -52,16 +52,7 @@ function NavBar({logoutFunc, user}){
         <NavDrawer state={state} setState={setState} toggleDrawer={toggleDrawer} logoutFunc={logoutFunc}></NavDrawer>
         <Box sx={{ flexGrow: 1 }}>
         <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={auth}
-                onChange={handleChange}
-                aria-label="login switch"
-              />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
+          
         </FormGroup>
         <AppBar position="static">
           <Toolbar>
@@ -82,16 +73,7 @@ function NavBar({logoutFunc, user}){
             </Typography>
             {auth && (
               <div>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
+                
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}

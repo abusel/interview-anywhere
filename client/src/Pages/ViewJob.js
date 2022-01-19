@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 
-function ViewJob({job, setJob, adding, interview, setInterview}){
+function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
     const params = useParams();
     const [log, setLog] = useState(false)
     const [questions, setQuestions] = useState([])
@@ -27,7 +27,10 @@ function ViewJob({job, setJob, adding, interview, setInterview}){
 
 
     useEffect(()=>{
-        fetch(`/api/jobs/${params.job}`).then(r => r.json()).then(data => console.log(data))
+        let jobId = params.createdJob? params.createdJob : params.job
+
+        fetch(`/api/jobs/${jobId}`).then(r => r.json()).then(data => setJob(data))
+        
     }, [])
 
     useEffect(
@@ -76,6 +79,10 @@ function ViewJob({job, setJob, adding, interview, setInterview}){
                 })
             }
             </div>  
+            {!adding && <Button variant='outlined' onClick={()=> {
+                adding = true
+                history.push(`/create/${job.id}`)
+                }}>Add More Questions</Button>}
 
 
            { adding ? <><RecordView type='q2' questions={questions} setQuestions={setQuestions} post={post} job= {job} />
@@ -113,7 +120,7 @@ function ViewJob({job, setJob, adding, interview, setInterview}){
                      sx={{ width: 300 }}
                      renderInput={(params) => <TextField {...params} label="Applicant" />}
                    />
-                   <Button onClick={()=> {
+                   <Button variant='outlined' onClick={()=> {
                        interview && history.push(`/interview/${interview.id}`)
                        }}>View Interview</Button>
                    </div>
