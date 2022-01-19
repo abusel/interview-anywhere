@@ -1,6 +1,5 @@
 require "active_support/core_ext/integer/time"
 
-config.active_storage.service = :amazon
 
 
 Rails.application.configure do
