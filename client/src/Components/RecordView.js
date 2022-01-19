@@ -133,22 +133,7 @@ function RecordView({type, job,  post, questions, setQuestions}){
                       setHasRecorded(true)
                       }}>Stop Recording</Button>
                     <Button color="primary" variant="outlined" ref={liveRef} style={{display: 'none'}} onClick={()=> {
-                      // fetch('/api/users', 
-                      // {
-                      //   method: 'POST',
-                      //   headers: {
-                      //     'Accept': 'application/json',
-                      //     'Content-Type': 'application/json'
-                      //   },
-                      //   body:JSON.stringify({
-                      //     name: 'testofficial',
-                      //     video: blob
-                      //   })
-                      // })
 
-                      // fetch('http://res.cloudinary.com/abusel/video/upload/v1641849510/imxmssfgxmdrh6y7c8fo.mkv')
-                      // .then(res=> res.)
-                      // console.log(mediaBlobUrl)
                       testRef.current.srcObject = previewStream
                       testRef.current.play()
                       }}>play</Button>

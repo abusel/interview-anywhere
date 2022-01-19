@@ -8,8 +8,11 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
     const data = new FormData()
     const [duration, setDuration] = useState('')
     const [url, setUrl] = useState('')
+    const startRef = useRef()
     const testRef = useRef()
+    const liveRef = useRef()
     const [post, setPost] = useState(false)
+    const [recording, setRecording] = useState(false)
 
 
 
@@ -37,7 +40,7 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
 
     useEffect(()=>{
         setTimeout(()=> {
-            testRef.current.click()
+            startRef.current.click()
         }, (question.duration * 1000 + 200))
     }, [test])
 
@@ -72,12 +75,28 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
                 <div>
                   <p>{status}</p>
                   {status === 'recording' && <h2> Start talking now!</h2>}
-                  <p    ref={testRef}   onClick={()=>{
+                  <p    ref={startRef}   onClick={()=>{
                     startRecording()
                     setHide(true)
+                    setTimeout(() => {
+                        liveRef.current.click()
+                        
+                      }, 2000);
+                    setRecording(true)
                     }}></p>
-                  <Button color="primary" variant="contained" onClick={stopRecording}>Stop Recording</Button>
+                    <Button color="primary" variant="outlined" ref={liveRef} style={{display: 'none'}} onClick={()=> {
+
+                      testRef.current.srcObject = previewStream
+                      testRef.current.play()
+                      }}>play</Button>
+                  <Button color="primary" variant="contained" onClick={()=> {
+                    stopRecording()
+                    setRecording(false)}
+                    }>Stop Recording</Button>
                  { !hide && <video src={question.link} autoPlay></video>}
+                  {recording && <video ref={testRef} src={mediaBlobUrl ? mediaBlobUrl : url} controls autoplay  width={800} />}
+                 
+
                   {/* <Button color="primary" variant="contained" onClick={()=> {
                     // fetch('/api/users', 
                     // {

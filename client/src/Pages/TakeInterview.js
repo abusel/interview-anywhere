@@ -10,6 +10,7 @@ function TakeInterview({user}){
     const [questions, setQuestions] = useState([])
     const [questionNum, setQuestionNum] = useState(0)
     const [hide, setHide] = useState(false)
+    const [start, setStart] = useState(0)
     let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide}/> : <div>Done!</div>
 
 
@@ -19,15 +20,16 @@ function TakeInterview({user}){
 
 
     useEffect(()=>{
-     
-    }, [questionNum])
+        start && !questions && fetch(`/api/jobs/${jobId}`).then(res => res.json()).then(data => setQuestions(data.questions))
+    }, [start])
     
     function startInterview(){
+        setStart(start => start +1)
 
         console.log({
             jobId: jobId
         }, questions)
-        fetch('/api/interviews', {
+        questions && fetch('/api/interviews', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
