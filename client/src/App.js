@@ -105,8 +105,9 @@ export default function App() {
      })}
     </div>
       </Route>
-      <NavBar logoutFunc={logoutFunc} user={user}/>
+      
       <Route exact path='/interview/:jobId'>
+        <NavBar logoutFunc={logoutFunc} user={user}/>
         <TakeInterview user={user}/>
       </Route>
 

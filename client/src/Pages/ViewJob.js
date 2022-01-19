@@ -21,11 +21,13 @@ function ViewJob({job, setJob, adding, interview, setInterview}){
     const [selectedInterviewId, setSelectedInterviewId] = useState('')
     let history = useHistory()
 
- 
+ useEffect(()=>{
+     
+ }, [])
 
 
     useEffect(()=>{
-        fetch(`/api/jobs/${params.job}`).then(r => r.json()).then(data => setJob(data))
+        fetch(`/api/jobs/${params.job}`).then(r => r.json()).then(data => console.log(data))
     }, [])
 
     useEffect(
