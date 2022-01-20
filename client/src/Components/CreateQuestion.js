@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom'
 
 
 
-const steps = ['Name the Job', 'Create First Question', 'Finalize'];
+const steps = ['Name the Job', '', 'Create First Question'];
 
 export default function CreateQuestion({setJob, job, user}) {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -26,6 +26,10 @@ export default function CreateQuestion({setJob, job, user}) {
     useEffect(()=>{
 
     },[activeStep])
+
+    useEffect(()=>{
+      setJob('f')
+    }, [])
 
   const isStepOptional = (step) => {
     return step === 10;
@@ -94,10 +98,23 @@ export default function CreateQuestion({setJob, job, user}) {
   return (
     <>
     {activeStep === 0 && <div>
-        <p>Please Name the Job</p>
+        <Typography variant="h5" gutterBottom component="div">
+        Please name the job
+      </Typography>
         <Input value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title'/>
         </div>}
-    {activeStep > 0 && <RecordView type='q1' job={job} post={post} />}
+
+
+        {activeStep === 1 && <div>
+          <Typography variant="h6" gutterBottom component="div">
+        Use the first question as an opportunity to introduce yourself and prompt the applicant to introduce themselves
+      </Typography>
+        </div>
+        }
+
+
+
+    {activeStep > 1 && <RecordView type='q1' job={job} post={post} />}
     <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {

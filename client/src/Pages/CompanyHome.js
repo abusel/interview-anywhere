@@ -34,7 +34,7 @@ function CompanyHome({user,setJob}){
 
                     {jobs[0] && 
                     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                <List>{jobs.filter(job => {
+                <List >{jobs.filter(job => {
                     return job.user_id === user.id
                 }).map(job => {
                    return  <ListItem diablePadding onClick={()=> {

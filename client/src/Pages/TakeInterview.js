@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import { useParams } from "react-router-dom";
 import {Button} from '@material-ui/core';
 import QuestionAnswer from '../Components/QuestionAnswer';
+import InterviewRulesPop from '../Components/InterviewRulesPop'
 
 
 function TakeInterview({user}){
@@ -11,6 +12,7 @@ function TakeInterview({user}){
     const [questionNum, setQuestionNum] = useState(0)
     const [hide, setHide] = useState(false)
     const [start, setStart] = useState(0)
+    const [open, setOpen] = useState(false);
     let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide}/> : <div>Done!</div>
 
 
@@ -20,8 +22,12 @@ function TakeInterview({user}){
 
 
     useEffect(()=>{
-        start && !questions && fetch(`/api/jobs/${jobId}`).then(res => res.json()).then(data => setQuestions(data.questions))
-    }, [start])
+        jobId &&  fetch(`/api/jobs/${jobId}`).then(res => res.json()).then(data => setQuestions(data.questions))
+    }, [start, jobId])
+
+    useEffect(()=> {
+        jobId && console.log(jobId)
+    }, [jobId])
     
     function startInterview(){
         setStart(start => start +1)
@@ -56,7 +62,7 @@ function TakeInterview({user}){
     return (
         <div>
             job_id: {jobId}
-            <Button onClick={startInterview}>Start Interview</Button>
+            <Button onClick={()=> setOpen(true)}>Start Interview</Button>
             {
                 interview && questions && question(questionNum)
             }
@@ -66,6 +72,7 @@ function TakeInterview({user}){
                 setQuestionNum(questionNum => questionNum + 1)
                 setHide(false)
                 }}>Next Question</Button>
+                <InterviewRulesPop open={open} setOpen={setOpen} startInterview={startInterview} questions = {questions}/>
         </div>
     )
 }
