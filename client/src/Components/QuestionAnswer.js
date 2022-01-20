@@ -2,6 +2,7 @@ import { ReactMediaRecorder } from "react-media-recorder";
 import {useState, useEffect, useRef} from 'react'
 import {Button} from '@material-ui/core';
 import getBlobDuration from 'get-blob-duration'
+import Boop from '../Audio/Boop.m4a'
 
 
 function QuestionAnswer({interview, question, test, hide, setHide}){
@@ -13,6 +14,7 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
     const liveRef = useRef()
     const [post, setPost] = useState(false)
     const [recording, setRecording] = useState(false)
+      let audio = new Audio(Boop);
 
 
 
@@ -34,7 +36,7 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
         }
         
         )
-
+  console.log(question)
     
     }, [post])
 
@@ -79,22 +81,27 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
                     startRecording()
                     setHide(true)
                     setTimeout(() => {
+                        audio.play()
+                        
+                        
+                      }, 400);
+                    setTimeout(() => {
                         liveRef.current.click()
                         
-                      }, 2000);
+                      }, 2500);
                     setRecording(true)
                     }}></p>
                     <Button color="primary" variant="outlined" ref={liveRef} style={{display: 'none'}} onClick={()=> {
 
                       testRef.current.srcObject = previewStream
-                      testRef.current.play()
+
                       }}>play</Button>
                   <Button color="primary" variant="contained" onClick={()=> {
                     stopRecording()
                     setRecording(false)}
                     }>Stop Recording</Button>
                  { !hide && <video src={question.link} autoPlay></video>}
-                  {recording && <video ref={testRef} src={mediaBlobUrl ? mediaBlobUrl : url} controls autoplay  width={800} />}
+                  {recording && <video ref={testRef} autoPlay  width={800} />}
                  
 
                   {/* <Button color="primary" variant="contained" onClick={()=> {

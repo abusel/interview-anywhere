@@ -4,6 +4,8 @@ import { ReactMediaRecorder } from "react-media-recorder";
 import getBlobDuration from 'get-blob-duration'
 import {Button} from '@material-ui/core';
 import {useHistory} from 'react-router-dom'
+import Boop from '../Audio/Boop.m4a'
+
 
 
 
@@ -48,6 +50,8 @@ function RecordView({type, job,  post, questions, setQuestions}){
   const [url, setUrl] = useState('')
   const [hasRecorded, setHasRecorded] = useState(false)
   const [recording, setRecording] = useState(false)
+  let audio = new Audio(Boop);
+
 
 
   const testRef = useRef()
@@ -80,13 +84,7 @@ function RecordView({type, job,  post, questions, setQuestions}){
     
     return     (
             <div>
-              {/* <ReactMediaRecorder
-          video
-          render={({ previewStream }) => {
-            return <VideoPreview stream={previewStream} />;
-          }}
-  /> */}
-
+           
               <ReactMediaRecorder
               
                 video
@@ -116,10 +114,17 @@ function RecordView({type, job,  post, questions, setQuestions}){
                     {status === 'recording' && <h2> Start talking now!</h2>}
                     <Button color="primary" variant="outlined" onClick={()=>{
                       startRecording()
+                    
+                    setTimeout(() => {
+                        audio.play()
+                        
+                        
+                      }, 400);
                       setTimeout(() => {
                         liveRef.current.click()
                         
-                      }, 2000);
+                        
+                      }, 2500);
                       setRecording(true)
                       }}>{hasRecorded ? 'New Attempt': 'Start Recording'}</Button>
                     <Button color="primary" variant="outlined" onClick={()=> {
@@ -134,11 +139,13 @@ function RecordView({type, job,  post, questions, setQuestions}){
                       }}>Stop Recording</Button>
                     <Button color="primary" variant="outlined" ref={liveRef} style={{display: 'none'}} onClick={()=> {
 
-                      testRef.current.srcObject = previewStream
-                      testRef.current.play()
+                      if(testRef.current ){
+                        testRef.current.srcObject = previewStream
+                      } 
+                      
                       }}>play</Button>
                     <div>
-                      {recording && <video ref={testRef} src={mediaBlobUrl ? mediaBlobUrl : url} controls autoplay  width={800} />
+                      {recording && <video ref={testRef}  autoPlay  width={800} />
                        }
                        {!recording && <video src={mediaBlobUrl ? mediaBlobUrl : url} controls autoplay  width={800}/>}
                     </div>

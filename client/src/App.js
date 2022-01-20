@@ -13,6 +13,8 @@ import TakeInterview from './Pages/TakeInterview'
 import ViewInterview from "./Pages/ViewInterview";
 import UserHome from "./Pages/UserHome";
 import NavBar from "./Components/NavBar";
+import ViewJobPostings from "./Pages/ViewJobPostings"
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 
 export default function App() {
@@ -22,6 +24,12 @@ export default function App() {
   const [interview, setInterview] = useState('')
   let history = useHistory()
 
+  const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    
+  },
+});
 
 
   useEffect(() => {
@@ -50,7 +58,7 @@ export default function App() {
             <Route exact path='/'>
                   
             <SignUp user={user} setUser={setUser}/>
-            {user.name}
+            
             
             </Route>
             <Route exact path='/login'>
@@ -64,9 +72,12 @@ export default function App() {
     <Switch>
       <Route exact path='/'>
         <div className="app">
+        <ThemeProvider theme={darkTheme}>
           <NavBar logoutFunc={logoutFunc} user={user}/>
-        {user.name}
-        <CompanyHome user={user} setJob={setJob}/>
+          </ThemeProvider>
+        
+        <CompanyHome user={user} setJob={setJob} setInterview={setInterview}/>
+        
         </div>
       </Route>
 
@@ -97,7 +108,9 @@ export default function App() {
   if (!user.is_company) return (
     <Switch>
       <Route exact path='/'>
-      <NavBar logoutFunc={logoutFunc} user={user}/>
+      <ThemeProvider theme={darkTheme}>
+          <NavBar logoutFunc={logoutFunc} user={user}/>
+          </ThemeProvider>
       <div className="app">
       <UserHome user={user}/>
      {videos[0] && videos.map((video)=>{
@@ -109,6 +122,11 @@ export default function App() {
       <Route exact path='/interview/:jobId'>
         <NavBar logoutFunc={logoutFunc} user={user}/>
         <TakeInterview user={user}/>
+      </Route>
+
+      <Route exact path='/jobpostings'>
+        <NavBar logoutFunc={logoutFunc} user={user}/>
+        <ViewJobPostings/>
       </Route>
 
     </Switch>

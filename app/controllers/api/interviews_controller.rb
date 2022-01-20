@@ -20,6 +20,14 @@ class Api::InterviewsController < ApplicationController
         render json: interviews
     end
 
+    def lastFive
+        j = Job.where(user_id: params[:id])
+        arr = j.map{ |job| job.id}
+        interviews = Interview.all.select{|i| arr.include?(i.job_id)}
+        last = interviews.last(5).reverse()
+        render json: last
+    end
+
 
     private
     def interview_params

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :answers
     post "/signup", to: "users#create"
     get "/interviewjob/:id", to: 'interviews#showjob'
+    get "/recentinterviews/:id", to: 'interviews#lastFive'
+
     get "/me", to: "users#show"
     post "/login", to: "sessions#create"
     delete "/logout", to: "sessions#destroy"

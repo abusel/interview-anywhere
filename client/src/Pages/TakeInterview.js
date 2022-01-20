@@ -13,6 +13,8 @@ function TakeInterview({user}){
     const [hide, setHide] = useState(false)
     const [start, setStart] = useState(0)
     const [open, setOpen] = useState(false);
+    const [jobHeader, setJobHeader] = useState('')
+    
     let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide}/> : <div>Done!</div>
 
 
@@ -22,7 +24,9 @@ function TakeInterview({user}){
 
 
     useEffect(()=>{
-        jobId &&  fetch(`/api/jobs/${jobId}`).then(res => res.json()).then(data => setQuestions(data.questions))
+        jobId &&  fetch(`/api/jobs/${jobId}`).then(res => res.json()).then(data => {
+            setJobHeader('Interview to be a ' + data.title + ' for ' + data.user.name)
+            setQuestions(data.questions)})
     }, [start, jobId])
 
     useEffect(()=> {
@@ -61,6 +65,7 @@ function TakeInterview({user}){
     }, [jobId, setJobId])
     return (
         <div>
+            <h3>{jobHeader}</h3>
             job_id: {jobId}
             <Button onClick={()=> setOpen(true)}>Start Interview</Button>
             {

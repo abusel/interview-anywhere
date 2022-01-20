@@ -49,7 +49,7 @@ function NavBar({logoutFunc, user}){
     };
     return (
         <>
-        <NavDrawer state={state} setState={setState} toggleDrawer={toggleDrawer} logoutFunc={logoutFunc}></NavDrawer>
+        <NavDrawer state={state} setState={setState} toggleDrawer={toggleDrawer} logoutFunc={logoutFunc} user={user}></NavDrawer>
         <Box sx={{ flexGrow: 1 }}>
         <FormGroup>
           

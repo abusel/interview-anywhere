@@ -11,9 +11,10 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import HomeIcon from '@mui/icons-material/Home';
+import AppsIcon from '@mui/icons-material/Apps';
 
 
-function NavDrawer({state, setState, toggleDrawer, logoutFunc}){
+function NavDrawer({state, setState, toggleDrawer, logoutFunc, user}){
      let history = useHistory()
     
       const list = (anchor) => (
@@ -31,6 +32,8 @@ function NavDrawer({state, setState, toggleDrawer, logoutFunc}){
                 </ListItemIcon>
                 <ListItemText primary={'Log Out'} />
               </ListItem>
+
+            
             <ListItem button key={'Home'} onClick={()=> {
                 history.push('/')
             }}>
@@ -39,6 +42,19 @@ function NavDrawer({state, setState, toggleDrawer, logoutFunc}){
                 </ListItemIcon>
                 <ListItemText primary={'Home'} />
               </ListItem>
+
+
+              
+              {!user.is_company && <ListItem button key={'Job Postings'} onClick={()=> {
+                history.push('/jobpostings')
+            }}>
+                <ListItemIcon>
+                  { <AppsIcon />}
+                </ListItemIcon>
+                <ListItemText primary={'View Job Postings'} />
+              </ListItem>}
+              
+              
             {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
               <ListItem button key={text}>
                 <ListItemIcon>
