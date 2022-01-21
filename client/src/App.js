@@ -14,7 +14,7 @@ import ViewInterview from "./Pages/ViewInterview";
 import UserHome from "./Pages/UserHome";
 import NavBar from "./Components/NavBar";
 import ViewJobPostings from "./Pages/ViewJobPostings"
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, Theme, ThemeProvider } from "@mui/material/styles"
 
 
 export default function App() {
@@ -23,13 +23,18 @@ export default function App() {
   const [job, setJob] = useState('')
   const [interview, setInterview] = useState('')
   let history = useHistory()
-
   const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    
-  },
+    action: {
+      disabledBackground: 'blue',
+      disabledColor: 'red',
+      },
+    },
+
 });
+
+
 
 
   useEffect(() => {
@@ -56,15 +61,13 @@ export default function App() {
       <div className="app">
         <Switch>
             <Route exact path='/'>
-              <ThemeProvider>
+                  
             <SignUp user={user} setUser={setUser}/>
+            {user.name}
             
-            </ThemeProvider>
             </Route>
             <Route exact path='/login'>
-              <ThemeProvider>
               <Login setUser={setUser} ></Login>
-              </ThemeProvider>
             </Route>
         </Switch>
       </div>
@@ -73,38 +76,42 @@ export default function App() {
   if (user.is_company) return (  
     <Switch>
       <Route exact path='/'>
+      <ThemeProvider theme={darkTheme}>
         <div className="app">
-        <ThemeProvider theme={darkTheme}>
           <NavBar logoutFunc={logoutFunc} user={user}/>
-          
-        
+        {user.name}
         <CompanyHome user={user} setJob={setJob} setInterview={setInterview}/>
-        </ThemeProvider>
-        
         </div>
+        </ThemeProvider>
       </Route>
 
       <Route exact path='/create'>
-      
-      
+        <ThemeProvider theme={darkTheme}>
         <NavBar logoutFunc={logoutFunc} user={user}/>
 
         <CreateJob user={user} job={job} setJob={setJob}/>
+        </ThemeProvider>
       </Route>
 
       <Route exact path='/create/:createdJob'>
+      <ThemeProvider theme={darkTheme}>
          <NavBar logoutFunc={logoutFunc} user={user}/>
         <ViewJob job={job} setJob={setJob} adding={true}/>
+        </ThemeProvider>
       </Route>
 
       <Route exact path='/:job'>
+        <ThemeProvider theme={darkTheme}>
          <NavBar logoutFunc={logoutFunc} user={user}/>
         <ViewJob job={job} setJob={setJob} adding={false} interview={interview} setInterview={setInterview}/>
+        </ThemeProvider>
       </Route>
       
       <Route exact path='/interview/:interviewId'>
+      <ThemeProvider theme={darkTheme}>
        <NavBar logoutFunc={logoutFunc} user={user}/>
         <ViewInterview user={user} interview={interview} setInterview={setInterview}/>
+        </ThemeProvider>
       </Route>
     </Switch>
  
@@ -113,25 +120,38 @@ export default function App() {
   if (!user.is_company) return (
     <Switch>
       <Route exact path='/'>
-      <ThemeProvider theme={darkTheme}>
-          <NavBar logoutFunc={logoutFunc} user={user}/>
-          </ThemeProvider>
+    
+        <ThemeProvider theme={darkTheme}>
+        <NavBar logoutFunc={logoutFunc} user={user}/>
       <div className="app">
-      <UserHome user={user}/>
+     
+
+      
+        <UserHome user={user}/>
+        
+  
+
+      
+      
      {videos[0] && videos.map((video)=>{
       return <div key={video.id}> <video  src={video.url} controls width={800} /> <p>{video.duration}</p></div>
      })}
     </div>
+    </ThemeProvider>
       </Route>
       
       <Route exact path='/interview/:jobId'>
+      <ThemeProvider theme={darkTheme}>
         <NavBar logoutFunc={logoutFunc} user={user}/>
         <TakeInterview user={user}/>
+        </ThemeProvider>
       </Route>
 
       <Route exact path='/jobpostings'>
+      <ThemeProvider theme={darkTheme}>
         <NavBar logoutFunc={logoutFunc} user={user}/>
         <ViewJobPostings/>
+        </ThemeProvider>
       </Route>
 
     </Switch>
