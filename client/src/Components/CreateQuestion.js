@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import RecordView from './RecordView';
 import Input from '@mui/material/Input';
 import { useHistory } from 'react-router-dom'
+import TextField from '@mui/material/TextField'
 
 
 
@@ -97,15 +98,15 @@ export default function CreateQuestion({setJob, job, user}) {
 
   return (
     <>
-    {activeStep === 0 && <div>
+    {activeStep === 0 && <div style={{textAlign: 'center', color: 'white'}}>
         <Typography variant="h5" gutterBottom component="div">
         Please name the job
       </Typography>
-        <Input value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title'/>
+        <Input variant='filled' sx={{ bgcolor: 'white'}}  value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title'/>
         </div>}
 
 
-        {activeStep === 1 && <div>
+        {activeStep === 1 && <div style={{color:'white'}}>
           <Typography variant="h6" gutterBottom component="div">
         Use the first question as an opportunity to introduce yourself and prompt the applicant to introduce themselves
       </Typography>
@@ -115,7 +116,7 @@ export default function CreateQuestion({setJob, job, user}) {
 
 
     {activeStep > 1 && <RecordView type='q1' job={job} post={post} />}
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '90vw', position: 'Absolute', bottom: '10%', left: '5vw'  }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -150,7 +151,7 @@ export default function CreateQuestion({setJob, job, user}) {
           <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
-              color="inherit"
+              style={{color: 'white'}}
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
@@ -164,7 +165,7 @@ export default function CreateQuestion({setJob, job, user}) {
               </Button>
             )}
 
-            <Button onClick={handleNext}>
+            <Button onClick={handleNext} style={{color: 'white'}}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>

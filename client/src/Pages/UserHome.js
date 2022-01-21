@@ -10,13 +10,13 @@ function UserHome({user}){
 
     return (
         <div>
-           <p>Welcome {user.name}!</p> 
-           <p>Please enter code below to go to an interview! </p>
+           <p style={{color: 'white'}}>Welcome {user.name}!</p> 
+           <p style={{color: 'white'}}> Please enter code below to go to an interview! </p>
            <div>
-           <Input placeholder='Interview Code' value={interviewCode} onChange={(e)=> setInterviewCode(e.target.value)}/>
+           <Input placeholder='Interview Code' value={interviewCode} onChange={(e)=> setInterviewCode(e.target.value)} variant='filled' sx={{ bgcolor: 'white'}} />
             <Button onClick={()=> {
                 history.push(`/interview/${interviewCode}`)
-            }}>Let's go</Button>
+            }} variant='filled' sx={{ bgcolor: 'white'}} disabled={interviewCode ? false: true}>Let's go</Button>
            </div>
             
         </div>

@@ -91,7 +91,7 @@ export default function SignUp(
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
+                <TextField variant='filled' sx={{ bgcolor: 'white'}} 
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -102,7 +102,7 @@ export default function SignUp(
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
+                <TextField variant='filled' sx={{ bgcolor: 'white'}} 
                   required
                   fullWidth
                   id="lastName"
@@ -112,7 +112,7 @@ export default function SignUp(
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <TextField variant='filled' sx={{ bgcolor: 'white'}} 
                   required
                   fullWidth
                   id="email"
@@ -122,7 +122,7 @@ export default function SignUp(
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <TextField variant='filled' sx={{ bgcolor: 'white'}} 
                   required
                   fullWidth
                   name="password"

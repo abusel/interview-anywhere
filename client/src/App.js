@@ -56,13 +56,15 @@ export default function App() {
       <div className="app">
         <Switch>
             <Route exact path='/'>
-                  
+              <ThemeProvider>
             <SignUp user={user} setUser={setUser}/>
             
-            
+            </ThemeProvider>
             </Route>
             <Route exact path='/login'>
+              <ThemeProvider>
               <Login setUser={setUser} ></Login>
+              </ThemeProvider>
             </Route>
         </Switch>
       </div>
@@ -74,14 +76,17 @@ export default function App() {
         <div className="app">
         <ThemeProvider theme={darkTheme}>
           <NavBar logoutFunc={logoutFunc} user={user}/>
-          </ThemeProvider>
+          
         
         <CompanyHome user={user} setJob={setJob} setInterview={setInterview}/>
+        </ThemeProvider>
         
         </div>
       </Route>
 
       <Route exact path='/create'>
+      
+      
         <NavBar logoutFunc={logoutFunc} user={user}/>
 
         <CreateJob user={user} job={job} setJob={setJob}/>

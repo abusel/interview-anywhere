@@ -49,7 +49,7 @@ function InterviewRulesPop({open, setOpen, startInterview, questions}){
                 <FormControlLabel control={<Checkbox   onChange={()=> setAgree(agree => !agree)}/>} label="I have read and agree to the rules" />
         
 
-          <Button onClick={()=> {
+          <Button disabled={!agree && true}onClick={()=> {
               if (agree ){
                   
                   startInterview()

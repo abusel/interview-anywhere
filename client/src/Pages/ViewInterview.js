@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import Button from '@mui/material/Button';
 import { useParams } from "react-router-dom";
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
+import { Button } from '@mui/material';
 import { Accordion } from "@mui/material";
 
 
@@ -72,14 +72,14 @@ function ViewInterview({interview, setInterview}){
 
 
     return(
-        <>
+        <div >
         {/* <video autoPlay src={source}></video> */}
       { interview &&  <h2>{interview.user.name} interview for {job.title}</h2>}
 
         <div>
 
         </div>
-        <div>
+        <div style={{width: '90vw', textAlign: 'center'} } className='center' >
             {/* <Button onClick={()=> console.log(questionAnswer)}>click me</Button> */}
             {questionAnswer.map(video => {
                if (questionAnswer.indexOf(video) % 2 === 0) {return (
@@ -104,7 +104,7 @@ function ViewInterview({interview, setInterview}){
                 )}
             })}
         </div>
-        </>
+        </div>
 
        
     )

@@ -80,7 +80,7 @@ export default function Login({setUser}) {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
+            <TextField variant='filled' sx={{ bgcolor: 'white'}} 
               margin="normal"
               required
               fullWidth
@@ -90,7 +90,7 @@ export default function Login({setUser}) {
               autoComplete="email"
               autoFocus
             />
-            <TextField
+            <TextField variant='filled' sx={{ bgcolor: 'white'}} 
               margin="normal"
               required
               fullWidth

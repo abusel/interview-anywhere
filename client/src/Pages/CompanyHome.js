@@ -32,13 +32,13 @@ function CompanyHome({user,setJob, setInterview}){
     return (
         <>
         <h2> Welcome {user.name}</h2>
-        <div style={{display: 'flex'}}>
+        <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
         
-            <div>
+            <div >
                 <h3>View Posted Jobs:</h3>
 
                     {jobs[0] && 
-                    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', color: 'white', opacity: '0.8'}}>
                 <List >{jobs.filter(job => {
                     return job.user_id === user.id
                 }).map(job => {
@@ -62,17 +62,17 @@ function CompanyHome({user,setJob, setInterview}){
 
                 
             </div>
-            <div style={{padding: '5rem'}}>
+            <div style={{color: 'white'}} className='centerVertically' >
 
-                 <Button variant='outlined' onClick={()=> history.push(`/create`)}>Create a Job</Button>
+                 <Button  style={{maxWidth: '200px', maxHeight: '100px', minWidth: '200px', minHeight: '100px', textAlign: 'center', postition: 'absolute', color: 'white', borderColor: '#CF9FFF'}} variant='outlined' onClick={()=> history.push(`/create`)}>Create a Job</Button>
             </div>
-            <div>
+            <div style={{marginRight: '1vw'}}>
                 {recentInterviews[0] && <h3>View Most Recent Interviews:</h3>}
-           
+
                 
 
                     {recentInterviews[0] && 
-                    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', color: 'white'}}>
                 <List >{recentInterviews.map(interview => {
                    return  <ListItem diablePadding onClick={()=> {
                        setInterview(interview)
