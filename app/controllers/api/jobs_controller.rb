@@ -14,6 +14,12 @@ class Api::JobsController < ApplicationController
         render json: job, status: :ok
     end
 
+    def destroy
+        job = Job.find(params[:id])
+        job.destroy
+        head :no_content
+    end
+
     private
     def job_params 
         params.permit(:user_id, :title, :allow_multiple_attempts)

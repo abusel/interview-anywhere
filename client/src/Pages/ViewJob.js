@@ -49,6 +49,11 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
             <h2>{job.title}</h2>
             <h3>Interview Code: {job.id}</h3>
             <h4> Link: http://localhost:4000/interview/{job.id}</h4>
+            <Button onClick={()=> {
+                fetch(`/api/jobs/${job.id}`,{
+                    method: 'DELETE'
+                }).then(() => history.push('/'))
+            }}>Delete Job Posting</Button>
 
 
 
