@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
+import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import RecordView from './RecordView';
 import Input from '@mui/material/Input';
@@ -102,7 +102,7 @@ export default function CreateQuestion({setJob, job, user}) {
         <Typography variant="h5" gutterBottom component="div">
         Please name the job
       </Typography>
-        <Input variant='filled' sx={{ bgcolor: 'white'}}  value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title'/>
+        <Input variant='filled' sx={{ bgcolor: 'white', color: 'black'}}  value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title'/>
         </div>}
 
 

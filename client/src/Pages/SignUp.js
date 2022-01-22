@@ -16,7 +16,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom'
-
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 function Copyright(props) {
   return (
@@ -38,6 +39,8 @@ export default function SignUp(
 ) {
   const [isCompany, setIsCompany] = useState(false)
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState([])
+
    let history = useHistory()
 
   const handleSubmit = (event) => {
@@ -65,13 +68,14 @@ export default function SignUp(
              history.push('/')
           console.log(user)})
         } else {
-          r.json().then((err) => console.log(err));
+          r.json().then((err) => setErrors(err.errors));
         }
       });
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <div style={{justifyContent: 'center'}}>
+    <ThemeProvider theme={theme} >
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -160,6 +164,21 @@ export default function SignUp(
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+
+      {
+        errors[0] && <div    style={{
+            position: "absolute",
+            bottom: "10",
+            left: "50%",
+            transform: "translateX(-50%)"
+          }}> <Stack  sx={{ width: '20vw' }} spacing={2}>
+        {errors.map(err => {
+          return  <Alert severity="error">{err}</Alert>
+        })}
+        </Stack>
+        </div>
+      }
     </ThemeProvider>
+    </div>
   );
 }

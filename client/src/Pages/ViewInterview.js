@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import { Accordion } from "@mui/material";
+import {useHistory} from 'react-router-dom'
 
 
 
@@ -15,6 +16,7 @@ function ViewInterview({interview, setInterview}){
     const [job, setJob] = useState('')
     const [questionAnswer, setQuestionAnswer] = useState([])
     const params = useParams();
+    let history = useHistory()
     //const [source, setSource] = useState('https://res.cloudinary.com/abusel/video/upload/v1642199731/hb0s5hwwsxzlzsrrtlab.mkv')
 
 
@@ -59,7 +61,7 @@ function ViewInterview({interview, setInterview}){
 
     useEffect(()=>{
         setQuestionAnswer([])
-         if (job && interview){
+         if (job && interview.answers){
             for (let i=0; i< interview.answers.length; i++){
                 setQuestionAnswer(questionAnswer => [...questionAnswer, job.questions[i]])
                 setQuestionAnswer(questionAnswer => [...questionAnswer, interview.answers[i]])
@@ -74,7 +76,14 @@ function ViewInterview({interview, setInterview}){
     return(
         <div >
         {/* <video autoPlay src={source}></video> */}
-      { interview &&  <h2>{interview.user.name} interview for {job.title}</h2>}
+      { interview.user &&  <h2>{interview.user.name} interview for {job.title}</h2>}
+
+      {!interview.user && <div className='center'> 
+                <h3>Oops, Looks like we couldn't find that interview.  Please navigate from the home page</h3>
+                <Button className='center' color="primary" variant="contained"  onClick={()=> {
+                    history.push('/')
+                }}> Back to Home</Button>
+            </div>}
 
         <div>
 

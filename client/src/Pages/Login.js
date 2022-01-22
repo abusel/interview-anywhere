@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom'
+import {useState} from 'react'
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 
 function Copyright(props) {
@@ -32,6 +35,7 @@ const theme = createTheme();
 
 export default function Login({setUser}) {
     let history = useHistory()
+      const [errors, setErrors] = useState([])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,7 +60,7 @@ export default function Login({setUser}) {
             history.push('/')
 
           } else {
-            r.json().then((err) => console.log(err));
+            r.json().then((err) => setErrors(err.errors));
           }
         });
   };
@@ -100,10 +104,10 @@ export default function Login({setUser}) {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -114,9 +118,9 @@ export default function Login({setUser}) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                {/* <Link href="#" variant="body2">
                   Forgot password?
-                </Link>
+                </Link> */}
               </Grid>
               <Grid item>
                 <Link href="/" variant="body2">
@@ -128,6 +132,20 @@ export default function Login({setUser}) {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+
+       {
+        errors[0] && <div    style={{
+            position: "absolute",
+            bottom: "10",
+            left: "50%",
+            transform: "translateX(-50%)"
+          }}> <Stack  sx={{ width: '20vw' }} spacing={2}>
+        {errors.map(err => {
+          return  <Alert severity="error">{err}</Alert>
+        })}
+        </Stack>
+        </div>
+      }
     </ThemeProvider>
   );
 }

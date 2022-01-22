@@ -42,6 +42,9 @@ function InterviewRulesPop({open, setOpen, startInterview, questions}){
           <DialogContentText id="alert-dialog-description">
             - There are no retakes on questions or for the interview, DO NOT exit the interview once you have started as you will not be able to retake it
           </DialogContentText>
+            <DialogContentText id="alert-dialog-description">
+            - After answering each question, click 'Stop Recording' followed by 'Next Question' when you are ready to move on to the next question
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
 

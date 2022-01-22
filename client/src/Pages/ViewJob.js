@@ -46,11 +46,13 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
   
     return(
         <div>
-            {job.title}
+            <h2>{job.title}</h2>
+            <h3>Interview Code: {job.id}</h3>
+            <h4> Link: http://localhost:4000/interview/{job.id}</h4>
 
 
 
-            <div>  
+            <div style={{width: '80vw', textAlign: 'center'} } className='center' >  
                 <h3>View Questions:</h3>
             {
                 questions && questions.map(q =>{
@@ -79,7 +81,7 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
                 })
             }
             </div>  
-            {!adding && <Button variant='outlined' onClick={()=> {
+            {!adding && <Button className='center' variant='outlined' style={ {marginLeft: '25vw'}} onClick={()=> {
                 adding = true
                 history.push(`/create/${job.id}`)
                 }}>Add More Questions</Button>}
@@ -89,9 +91,8 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
             <Button onClick={()=>setPost(post => !post)}>Add Question</Button>
             <Button onClick={()=> history.push(`/`)}> Publish</Button>
             </> : <>
-                <h3> Link: http://localhost:4000/interview/{job.id}</h3>
-                <h3>Interview Code: {job.id}</h3>
-                <h5>View Interviews</h5>
+             
+                <h3>View Interviews:</h3>
                 {/* {
                     <ul>
                         {
@@ -108,7 +109,7 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
                 } */}
 
                 {
-                     interviews[0] && <div> <Autocomplete
+                     interviews[0] && <div style={{display: 'flex'}}> <Autocomplete
                      disableClearable
                      onChange={(e, newValue)=> {
                             setInterview(newValue)

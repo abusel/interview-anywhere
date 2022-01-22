@@ -5,7 +5,7 @@ import getBlobDuration from 'get-blob-duration'
 import Boop from '../Audio/Boop.m4a'
 
 
-function QuestionAnswer({interview, question, test, hide, setHide}){
+function QuestionAnswer({interview, question, test, hide, setHide, recording, setRecording}){
     const data = new FormData()
     const [duration, setDuration] = useState('')
     const [url, setUrl] = useState('')
@@ -13,7 +13,7 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
     const testRef = useRef()
     const liveRef = useRef()
     const [post, setPost] = useState(false)
-    const [recording, setRecording] = useState(false)
+    
       let audio = new Audio(Boop);
 
 
@@ -42,7 +42,11 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
 
     useEffect(()=>{
         setTimeout(()=> {
-            startRef.current.click()
+
+          if (startRef.current){
+              startRef.current.click()
+          }
+
         }, (question.duration * 1000 + 200))
     }, [test])
 
@@ -96,10 +100,10 @@ function QuestionAnswer({interview, question, test, hide, setHide}){
                       testRef.current.srcObject = previewStream
 
                       }}>play</Button>
-                  <Button color="primary" variant="contained" onClick={()=> {
+                  {recording && <Button color="primary" variant="contained" onClick={()=> {
                     stopRecording()
                     setRecording(false)}
-                    }>Stop Recording</Button>
+                    }>Stop Recording</Button>}
                  { !hide && <video src={question.link} autoPlay></video>}
                   {recording && <video ref={testRef} autoPlay  width={800} />}
                  
