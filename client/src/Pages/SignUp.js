@@ -140,8 +140,9 @@ export default function SignUp(
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="isCompany" id="isCompany" color="primary" onChange={()=> setIsCompany((isCompany)=> !isCompany)}/>}
+                  control={<Checkbox sx={{color: 'white'}} value="isCompany" id="isCompany" color="primary" onChange={()=> setIsCompany((isCompany)=> !isCompany)}/>}
                   label="I am a company"
+                  sx={{color: 'white'}}
                 />
               </Grid>
             </Grid>
