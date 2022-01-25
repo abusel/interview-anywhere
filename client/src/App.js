@@ -22,6 +22,7 @@ export default function App() {
   const [user, setUser] = useState('')
   const [job, setJob] = useState('')
   const [interview, setInterview] = useState('')
+  const [interviews, setInterviews] = useState([])
   let history = useHistory()
   const darkTheme = createTheme({
   palette: {
@@ -42,7 +43,10 @@ export default function App() {
     //auto-login
     fetch('/api/me').then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user));
+        r.json().then((user) => {
+          setUser(user)
+          // setInterviews(user.Interviews)
+          });
       }
     });
 
@@ -61,13 +65,14 @@ export default function App() {
       <div className="app">
         <Switch>
             <Route exact path='/'>
-                  
-            <SignUp user={user} setUser={setUser}/>
+                  <Login setUser={setUser} ></Login>
+            
             {user.name}
             
             </Route>
-            <Route exact path='/login'>
-              <Login setUser={setUser} ></Login>
+            <Route exact path='/signup'>
+            <SignUp user={user} setUser={setUser}/>
+              
             </Route>
         </Switch>
       </div>
@@ -127,7 +132,7 @@ export default function App() {
      
 
       
-        <UserHome user={user}/>
+        <UserHome user={user} interviews={interviews} setUser={setUser}/>
         
   
 

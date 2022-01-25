@@ -20,10 +20,11 @@ function TakeInterview({user}){
     const [recording, setRecording] = useState(false)
     const [alreadyTaken, setAlreadyTaken] = useState(false)
     const [recorded, setRecorded] = useState(false)
+    const [started, setStarted] = useState(false)
 
     
     
-    let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide} recording={recording} setRecording={setRecording} recorded={recorded} setRecorded={setRecorded}/> : <div> 
+    let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide} recording={recording} setRecording={setRecording} recorded={recorded} setRecorded={setRecorded} /> : <div> 
                 <h3>Nice Job! You are all finished.</h3>
                 <Button color="primary" variant="contained"  onClick={()=> {
                     history.push('/')
@@ -66,11 +67,12 @@ function TakeInterview({user}){
         }).then(r => {
             if (r.ok){
                 return r.json()
+                
             }
             else{
                 setAlreadyTaken(true)
             }
-        }).then(data => setInterview(data))
+        }).then(data => setInterview(data)).then(()=> setStarted(true))
     }
 
     useEffect(()=>{
@@ -88,11 +90,11 @@ function TakeInterview({user}){
 
         <div style={{color: 'white'}}>
             <h3>{jobHeader}</h3>
+           { questions && questionNum < questions.length && <p> Question Number {questionNum + 1} of {questions.length}</p>}
     
             
-            job_id: {jobId}
 
-           {found && questionNum === 0 &&  <Button sx={{bgcolor: 'white', color: 'black'}} onClick={()=> setOpen(true)}  >Start Interview</Button>}
+           {found && questionNum === 0 && !recording && !recorded && !started && <Button sx={{bgcolor: 'white', color: 'black'}} onClick={()=> setOpen(true)}  >Start Interview</Button>}
              {/* <Button  sx={{ bgcolor: 'white', color: 'black'}}  onClick={()=> {
                 setQuestionNum(questionNum => questionNum + 1)
                 setHide(false) 

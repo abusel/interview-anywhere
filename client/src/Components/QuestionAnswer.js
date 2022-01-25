@@ -79,7 +79,6 @@ function QuestionAnswer({interview, question, test, hide, setHide, recording, se
               }
               render={({ status, startRecording, stopRecording, mediaBlobUrl, previewStream }) => (
                 <div>
-                  <p>{status}</p>
                   {status === 'recording' && <h2> Start talking now!</h2>}
                   <p    ref={startRef}   onClick={()=>{
                     startRecording()

@@ -1,7 +1,7 @@
 
 
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -40,6 +40,11 @@ export default function SignUp(
   const [isCompany, setIsCompany] = useState(false)
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState([])
+  const [lastName, setLastName] = useState('')
+
+  useEffect(()=>{
+    setLastName('')
+  }, [isCompany])
 
    let history = useHistory()
 
@@ -48,7 +53,7 @@ export default function SignUp(
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     const form = JSON.stringify({
-      name: data.get('firstName') + ' ' + data.get('lastName'),
+      name: isCompany ?  data.get('lastName') : data.get('firstName') + ' ' + data.get('lastName'),
       email: data.get('email'),
       password: password,
       is_company: isCompany
@@ -94,7 +99,7 @@ export default function SignUp(
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              {!isCompany && <Grid item xs={12} sm={6}>
                 <TextField variant='filled' sx={{ bgcolor: 'white'}} 
                   autoComplete="given-name"
                   name="firstName"
@@ -104,15 +109,17 @@ export default function SignUp(
                   label="First Name"
                   autoFocus
                 />
-              </Grid>
+              </Grid>}
               <Grid item xs={12} sm={6}>
-                <TextField variant='filled' sx={{ bgcolor: 'white'}} 
+                <TextField variant='filled' sx={{ bgcolor: 'white', width: '100%'}} 
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label={isCompany ? "Company Name" : "Last Name"}
                   name="lastName"
                   autoComplete="family-name"
+                  value={lastName}
+                  onChange={(e)=> setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -156,7 +163,7 @@ export default function SignUp(
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
