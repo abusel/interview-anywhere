@@ -62,7 +62,7 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
             {!adding && <Button onClick={()=>setOpen(true)}>Delete Job Posting
                 <DeleteIcon/>
             </Button>}
-            {adding && <Button onClick={()=> history.push(`/${job.id}`)}> Publish Job</Button>}
+            {adding && <Button  variant='outlined' onClick={()=> history.push(`/${job.id}`)}> Finish Adding Questions</Button>}
 
 
 
@@ -100,15 +100,15 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
                 history.push(`/create/${job.id}`)
                 }}>Add More Questions</Button>}
 
-            {recorded && <Button onClick={()=>{
+            {recorded && <div className='center'> <Button variant='outlined' onClick={()=>{
                setPost(post => !post)
                setRecorded(false)
                setHasRecorded(false)
-               }}>Add Question</Button>}
-           { adding ? <><RecordView type='q2' questions={questions} setQuestions={setQuestions} post={post} job= {job} setRecorded={setRecorded} hasRecorded={hasRecorded} setHasRecorded={setHasRecorded}/>
+               }}>Add Question</Button> </div>}
+           { adding ? <div className='center'><RecordView type='q2' questions={questions} setQuestions={setQuestions} post={post} job= {job} setRecorded={setRecorded} hasRecorded={hasRecorded} setHasRecorded={setHasRecorded}/>
            
             
-            </> : <>
+            </div> : <>
              
                 {interviews[0] && <h3>View Interviews:</h3>}
                 {/* {

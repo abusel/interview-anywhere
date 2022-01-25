@@ -67,6 +67,7 @@ function ViewInterview({interview, setInterview}){
                 setQuestionAnswer(questionAnswer => [...questionAnswer, interview.answers[i]])
          } 
         }
+        console.log(job)
     }, [job])
 
 

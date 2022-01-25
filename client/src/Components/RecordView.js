@@ -135,7 +135,7 @@ function RecordView({type, job,  post, questions, setQuestions, recorded, setRec
                                      testRef.current.src = mediaBlobUrl
 
 
-                      setHasRecorded(true)
+                      type === 'q2' && setHasRecorded(true)
                       }}>Stop Recording</Button>}
                     <Button color="primary" variant="outlined" ref={liveRef} style={{display: 'none'}} onClick={()=> {
 
@@ -145,9 +145,9 @@ function RecordView({type, job,  post, questions, setQuestions, recorded, setRec
                       
                       }}>play</Button>
                     <div>
-                      {recording && <video ref={testRef}  autoPlay  width={800} />
+                      {recording && <video ref={testRef}  autoPlay  width={600} />
                        }
-                       {!recording && <video src={mediaBlobUrl ? mediaBlobUrl : url} controls autoplay  width={800}/>}
+                       {!recording && <video src={mediaBlobUrl ? mediaBlobUrl : url} controls autoplay  width={600}/>}
                     </div>
                     <div></div>
                   </div>

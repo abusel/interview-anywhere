@@ -110,7 +110,7 @@ export default function CreateQuestion({setJob, job, user}) {
   };
 
   return (
-    <>
+    <div className='center'>
     {activeStep === 0 && <div style={{textAlign: 'center', color: 'white'}}>
         <Typography variant="h5" gutterBottom component="div">
         Please name the job
@@ -130,7 +130,7 @@ export default function CreateQuestion({setJob, job, user}) {
 
 
     {activeStep > 1 && <RecordView type='q1' job={job} post={post} recorded={recorded} setRecorded={setRecorded}/>}
-    <Box sx={{ width: '90vw', position: 'Absolute', bottom: '10%', left: '5vw'  }}>
+    <Box sx={{ width: '90vw', position: 'Absolute', bottom: '5%', left: '5vw'  }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -186,6 +186,6 @@ export default function CreateQuestion({setJob, job, user}) {
         </React.Fragment>
       )}
     </Box>
-    </>
+    </div>
   );
 }
