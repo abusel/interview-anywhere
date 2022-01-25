@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ConfirmDelete from '../Components/ConfirmDelete'
 
 
 function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
@@ -19,6 +21,13 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
     const [interviews, setInterviews] = useState([])
     const [counter, setCounter] = useState(1)
     const [selectedInterviewId, setSelectedInterviewId] = useState('')
+    const [open, setOpen] = useState(false)
+    const [recorded, setRecorded] = useState(false)
+    const [hasRecorded, setHasRecorded] = useState(false)
+
+
+    
+    
     let history = useHistory()
 
  useEffect(()=>{
@@ -46,14 +55,14 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
   
     return(
         <div>
+            <ConfirmDelete open={open} setOpen={setOpen} job={job}/>
             <h2>{job.title}</h2>
             <h3>Interview Code: {job.id}</h3>
             <h4> Link: http://localhost:4000/interview/{job.id}</h4>
-            <Button onClick={()=> {
-                fetch(`/api/jobs/${job.id}`,{
-                    method: 'DELETE'
-                }).then(() => history.push('/'))
-            }}>Delete Job Posting</Button>
+            {!adding && <Button onClick={()=>setOpen(true)}>Delete Job Posting
+                <DeleteIcon/>
+            </Button>}
+            {adding && <Button onClick={()=> history.push(`/${job.id}`)}> Publish Job</Button>}
 
 
 
@@ -91,13 +100,17 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
                 history.push(`/create/${job.id}`)
                 }}>Add More Questions</Button>}
 
-
-           { adding ? <><RecordView type='q2' questions={questions} setQuestions={setQuestions} post={post} job= {job} />
-            <Button onClick={()=>setPost(post => !post)}>Add Question</Button>
-            <Button onClick={()=> history.push(`/`)}> Publish</Button>
+            {recorded && <Button onClick={()=>{
+               setPost(post => !post)
+               setRecorded(false)
+               setHasRecorded(false)
+               }}>Add Question</Button>}
+           { adding ? <><RecordView type='q2' questions={questions} setQuestions={setQuestions} post={post} job= {job} setRecorded={setRecorded} hasRecorded={hasRecorded} setHasRecorded={setHasRecorded}/>
+           
+            
             </> : <>
              
-                <h3>View Interviews:</h3>
+                {interviews[0] && <h3>View Interviews:</h3>}
                 {/* {
                     <ul>
                         {

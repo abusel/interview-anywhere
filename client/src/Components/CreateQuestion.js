@@ -20,6 +20,7 @@ export default function CreateQuestion({setJob, job, user}) {
   const [skipped, setSkipped] = React.useState(new Set());
   const [jobTitle, setJobTitle] = useState('')
   const [post, setPost] = useState(false)
+  const [recorded, setRecorded] = useState(false)
 
   let history = useHistory()
 
@@ -29,8 +30,20 @@ export default function CreateQuestion({setJob, job, user}) {
     },[activeStep])
 
     useEffect(()=>{
-      setJob('f')
-    }, [])
+      console.log(recorded)
+    }, [recorded])
+  function isDisabled(){
+    if (activeStep === 0 && !jobTitle){
+      return true
+    }
+    else if (activeStep === 2 && !recorded){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
 
   const isStepOptional = (step) => {
     return step === 10;
@@ -102,20 +115,21 @@ export default function CreateQuestion({setJob, job, user}) {
         <Typography variant="h5" gutterBottom component="div">
         Please name the job
       </Typography>
-        <Input variant='filled' sx={{ bgcolor: 'white', color: 'black'}}  value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title'/>
+        <Input variant='filled' sx={{ bgcolor: 'white', color: 'black'}}  value={jobTitle} onChange={(e)=> setJobTitle(e.target.value)} placeholder='Job Title' autoFocus/>
         </div>}
 
 
         {activeStep === 1 && <div style={{color:'white'}}>
           <Typography variant="h6" gutterBottom component="div">
-        Use the first question as an opportunity to introduce yourself and prompt the applicant to introduce themselves
+        Use the first question as an opportunity to introduce yourself and prompt the applicant to introduce themselves.
+        All questions will be videos as we believe that this form of question allows for a more 
       </Typography>
         </div>
         }
 
 
 
-    {activeStep > 1 && <RecordView type='q1' job={job} post={post} />}
+    {activeStep > 1 && <RecordView type='q1' job={job} post={post} recorded={recorded} setRecorded={setRecorded}/>}
     <Box sx={{ width: '90vw', position: 'Absolute', bottom: '10%', left: '5vw'  }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
@@ -165,7 +179,7 @@ export default function CreateQuestion({setJob, job, user}) {
               </Button>
             )}
 
-            <Button onClick={handleNext} style={{color: 'white'}}>
+            <Button onClick={handleNext} style={{color: 'white'}} disabled={isDisabled()}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>

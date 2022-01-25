@@ -5,7 +5,7 @@ import getBlobDuration from 'get-blob-duration'
 import Boop from '../Audio/Boop.m4a'
 
 
-function QuestionAnswer({interview, question, test, hide, setHide, recording, setRecording}){
+function QuestionAnswer({interview, question, test, hide, setHide, recording, setRecording, recorded, setRecorded}){
     const data = new FormData()
     const [duration, setDuration] = useState('')
     const [url, setUrl] = useState('')
@@ -102,7 +102,8 @@ function QuestionAnswer({interview, question, test, hide, setHide, recording, se
                       }}>play</Button>
                   {recording && <Button color="primary" variant="contained" onClick={()=> {
                     stopRecording()
-                    setRecording(false)}
+                    setRecording(false)
+                    setRecorded(true)}
                     }>Stop Recording</Button>}
                  { !hide && <video src={question.link} autoPlay></video>}
                   {recording && <video ref={testRef} autoPlay  width={800} />}

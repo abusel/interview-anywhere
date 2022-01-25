@@ -19,9 +19,11 @@ function TakeInterview({user}){
     const [found, setFound] = useState(true)
     const [recording, setRecording] = useState(false)
     const [alreadyTaken, setAlreadyTaken] = useState(false)
+    const [recorded, setRecorded] = useState(false)
+
     
     
-    let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide} recording={recording} setRecording={setRecording}/> : <div> 
+    let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide} recording={recording} setRecording={setRecording} recorded={recorded} setRecorded={setRecorded}/> : <div> 
                 <h3>Nice Job! You are all finished.</h3>
                 <Button color="primary" variant="contained"  onClick={()=> {
                     history.push('/')
@@ -100,9 +102,10 @@ function TakeInterview({user}){
             }
 
               {
-                interview && questions && questionNum !== questions.length && !recording && <Button  sx={{ bgcolor: 'white', color: 'black'}}  onClick={()=> {
+                interview && questions && questionNum !== questions.length && !recording && recorded && <Button  sx={{ bgcolor: 'white', color: 'black'}}  onClick={()=> {
                 setQuestionNum(questionNum => questionNum + 1)
                 setHide(false) 
+                setRecorded(false)
                 } }  >Next Question</Button>
             }
 

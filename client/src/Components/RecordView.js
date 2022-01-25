@@ -44,11 +44,10 @@ const VideoPreview = ({ stream }: { stream: MediaStream | null }) => {
 
 
 
-function RecordView({type, job,  post, questions, setQuestions}){
+function RecordView({type, job,  post, questions, setQuestions, recorded, setRecorded, hasRecorded, setHasRecorded}){
   const data = new FormData()
   const [duration, setDuration] = useState('')
   const [url, setUrl] = useState('')
-  const [hasRecorded, setHasRecorded] = useState(false)
   const [recording, setRecording] = useState(false)
   let audio = new Audio(Boop);
 
@@ -112,7 +111,7 @@ function RecordView({type, job,  post, questions, setQuestions}){
                   <div>
                    
                     {status === 'recording' && <h2> Start talking now!</h2>}
-                    <Button color="primary" variant="outlined" onClick={()=>{
+                    {!recording && <Button color="primary" variant="outlined" onClick={()=>{
                       startRecording()
                     
                     setTimeout(() => {
@@ -126,17 +125,18 @@ function RecordView({type, job,  post, questions, setQuestions}){
                         
                       }, 2500);
                       setRecording(true)
-                      }}>{hasRecorded ? 'New Attempt': 'Start Recording'}</Button>
-                    <Button color="primary" variant="outlined" onClick={()=> {
+                      }}>{hasRecorded ? 'New Attempt': 'Start Recording'}</Button>}
+                   { recording && <Button color="primary" variant="outlined" onClick={()=> {
                       stopRecording()
                       setRecording(false)
+                      setRecorded(true)
                       let currentMedia = testRef.current.srcObject.getTracks()[0]
                       testRef.current.srcObject.removeTrack(currentMedia)       
                                      testRef.current.src = mediaBlobUrl
 
 
                       setHasRecorded(true)
-                      }}>Stop Recording</Button>
+                      }}>Stop Recording</Button>}
                     <Button color="primary" variant="outlined" ref={liveRef} style={{display: 'none'}} onClick={()=> {
 
                       if(testRef.current ){
