@@ -27,6 +27,7 @@ input{
 
 *{
   border-radius: 5px;
+  /* border: 1px solid red; */
 }
 .center {
   margin: auto;
@@ -35,7 +36,8 @@ input{
   text-align: center;
 }
 .centerVertically {
-  padding: 200px 0;
+  /* padding: 200px 0; */
+  height: 100vh;
 }
 
 

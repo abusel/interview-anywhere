@@ -42,9 +42,13 @@ function CompanyHome({user,setJob, setInterview}){
         <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
         
             <div >
-                {jobs [0] && <h3>View Posted Jobs:</h3>}
+                {jobs.filter(job => {
+                    return job.user_id === user.id
+                })[0] && <h3>View Posted Jobs:</h3>}
 
-                    {jobs[0] && 
+                    {jobs.filter(job => {
+                    return job.user_id === user.id
+                }) && 
                     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', color: 'white', opacity: '0.8'}}>
                 <List >{jobs.filter(job => {
                     return job.user_id === user.id
@@ -69,12 +73,17 @@ function CompanyHome({user,setJob, setInterview}){
 
                 
             </div>
-            <div style={{color: 'white', flexDirection: 'column'}} className='centerVertically' >
+            {/* <div style={{color: 'white', }} className='centerVertically' > */}
 
-                 <Button  style={{maxWidth: '200px', maxHeight: '100px', minWidth: '200px', minHeight: '100px', textAlign: 'center', postition: 'absolute', color: 'white', borderColor: '#CF9FFF'}} variant='outlined' onClick={()=> history.push(`/create`)}>Create a Job</Button>
-                <Button  style={{maxWidth: '200px', maxHeight: '100px', minWidth: '200px', minHeight: '100px', textAlign: 'center', postition: 'absolute', color: 'white', borderColor: '#CF9FFF'}} variant='outlined' onClick={()=> history.push(`/mock`)}>Take a Mock Interview</Button>
+            <div style={{display: 'flex', height: '80vh', flexDirection: 'column'}}>
+             <Button  style={{ marginTop: '25vh', height: '10%', textAlign: 'center', color: 'white', borderColor: '#CF9FFF'}} variant='outlined' onClick={()=> history.push(`/create`)}>Create a Job</Button>
+            <Button  style={{ marginTop: '5vh', height: '10%',textAlign: 'center', color: 'white', borderColor: '#CF9FFF'}} variant='outlined' onClick={()=> history.push(`/mock`)}>Take a Mock Interview</Button>
 
             </div>
+
+
+                
+            {/* </div> */}
             <div style={{marginRight: '1vw'}}>
                 {recentInterviews[0] && <h3>View Most Recent Interviews:</h3>}
 

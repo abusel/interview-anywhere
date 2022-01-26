@@ -97,7 +97,7 @@ export default function App() {
       </Route>
 
       <Route exact path='/mock'>
-      <TakeInterview user={user} mock={true} interview={interview} setInterview={setInterview}/>
+        <TakeInterview user={user} mock={true} interview={interview} setInterview={setInterview}/>
       </Route>
       <Route exact path='/viewmock'>
       <ThemeProvider theme={darkTheme}>
