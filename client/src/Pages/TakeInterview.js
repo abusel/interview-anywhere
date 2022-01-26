@@ -88,13 +88,13 @@ function TakeInterview({user}){
     }, [jobId, setJobId])
     return (
 
-        <div className='center' style={{color: 'white'}}>
-            <h3>{jobHeader}</h3>
-           { questions && questionNum < questions.length && <p> Question Number {questionNum + 1} of {questions.length}</p>}
+        <div className='center start' style={{color: 'white'}}>
+            <h1>{jobHeader}</h1>
+           { questions && found && !alreadyTaken && questionNum < questions.length && <p> Question Number {questionNum + 1} of {questions.length}</p>}
     
             
 
-           {found && questionNum === 0 && !recording && !recorded && !started && <Button  sx={{bgcolor: 'white', color: 'black'}} onClick={()=> setOpen(true)}  >Start Interview</Button>}
+           {found && questionNum === 0 && !recording && !recorded && !started && <Button className='bigbutton' sx={{bgcolor: 'white', color: 'black'}} onClick={()=> setOpen(true)}  ><h2 className='black'>Start Interview</h2></Button>}
              {/* <Button  sx={{ bgcolor: 'white', color: 'black'}}  onClick={()=> {
                 setQuestionNum(questionNum => questionNum + 1)
                 setHide(false) 

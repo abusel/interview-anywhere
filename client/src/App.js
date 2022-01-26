@@ -70,16 +70,32 @@ export default function App() {
             {user.name}
             
             </Route>
+
             <Route exact path='/signup'>
             <SignUp user={user} setUser={setUser}/>
               
             </Route>
+
+             <Route path='/'>
+        <Redirect to="/" />
+      </Route>
+
+            
         </Switch>
       </div>
     )
 
+
   if (user.is_company) return (  
     <Switch>
+
+      <Route exact path='/login'>
+        <Redirect to="/" />
+      </Route>
+      <Route exact path='/signup'>
+        <Redirect to="/" />
+      </Route>
+
       <Route exact path='/'>
       <ThemeProvider theme={darkTheme}>
         <div className="app">
@@ -124,7 +140,15 @@ export default function App() {
     )
   if (!user.is_company) return (
     <Switch>
+     <Route exact path='/login'>
+        <Redirect to="/" />
+      </Route>
+      <Route exact path='/signup'>
+        <Redirect to="/" />
+      </Route>
+
       <Route exact path='/'>
+
     
         <ThemeProvider theme={darkTheme}>
         <NavBar logoutFunc={logoutFunc} user={user}/>

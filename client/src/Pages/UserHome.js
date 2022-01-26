@@ -10,7 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
-import WorkIcon from '@mui/icons-material/Work';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
@@ -43,25 +43,26 @@ function UserHome({user, setUser}){
             }} variant='filled' sx={{ bgcolor: '#CF9FFF', color: 'black'}} disabled={interviewCode ? false: true}>Let's go</Button>
            </div>
 
-           {
-               user.interviews.length && <h3>My completed interviews:</h3>
-           }
+           {/* {
+               user.interviews.length && 
+           } */}
 
            
-                {user.interviews.length && 
+                {user.interviews.length && <div style={{marginLeft: '5%'}}>
+                <h3>My completed interviews:</h3>
                     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', color: 'white', opacity: '0.8'}}>
                 <List >{user.interviews.map( interview => {
                    return  <ListItem diablePadding >
 
                         <ListItemIcon> 
-                            <WorkIcon/>
+                            <AssignmentTurnedInIcon/>
                         </ListItemIcon>
                         <ListItemText primary={interview.job.title} />
               
                    </ListItem>
                     })}</List>
                       </Box>
-                    }
+                    </div>}
             
         </div>
     )
