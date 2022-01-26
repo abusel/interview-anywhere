@@ -131,7 +131,7 @@ export default function CreateQuestion({setJob, job, user}) {
         {activeStep === 1 && <div style={{color:'white'}}>
           <Typography variant="h6" gutterBottom component="div">
         Use the first question as an opportunity to introduce yourself and prompt the applicant to introduce themselves.
-        All questions will be videos as we believe that this form of question allows for a more 
+        All questions will be videos as we believe that this form of question allows for a more natural flow for the interview
       </Typography>
         </div>
         }

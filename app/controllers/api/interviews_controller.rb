@@ -28,6 +28,12 @@ class Api::InterviewsController < ApplicationController
         render json: last
     end
 
+    def destroy
+        i = Interview.find(params[:id])
+        i.destroy
+        head :no_content
+    end
+
 
     private
     def interview_params

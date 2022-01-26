@@ -76,9 +76,9 @@ export default function App() {
               
             </Route>
 
-             <Route path='/'>
+             {/* <Route path='/'>
         <Redirect to="/" />
-      </Route>
+      </Route> */}
 
             
         </Switch>
@@ -94,6 +94,16 @@ export default function App() {
       </Route>
       <Route exact path='/signup'>
         <Redirect to="/" />
+      </Route>
+
+      <Route exact path='/mock'>
+      <TakeInterview user={user} mock={true} interview={interview} setInterview={setInterview}/>
+      </Route>
+      <Route exact path='/viewmock'>
+      <ThemeProvider theme={darkTheme}>
+      <NavBar logoutFunc={logoutFunc} user={user}/>
+      <ViewInterview user={user} interview={interview} setInterview={setInterview} mock={true} setUser={setUser}/>
+      </ThemeProvider>
       </Route>
 
       <Route exact path='/'>
@@ -134,6 +144,10 @@ export default function App() {
         <ViewInterview user={user} interview={interview} setInterview={setInterview}/>
         </ThemeProvider>
       </Route>
+
+      <Route path='/'>
+        <Redirect to="/" />
+      </Route>
     </Switch>
  
 
@@ -172,7 +186,7 @@ export default function App() {
       <Route exact path='/interview/:jobId'>
       <ThemeProvider theme={darkTheme}>
         <NavBar logoutFunc={logoutFunc} user={user}/>
-        <TakeInterview user={user}/>
+        <TakeInterview user={user} interview={interview} setInterview={setInterview}/>
         </ThemeProvider>
       </Route>
 

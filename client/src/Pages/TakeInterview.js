@@ -7,9 +7,9 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import {useHistory} from 'react-router-dom'
 
 
-function TakeInterview({user}){
+function TakeInterview({user, mock, interview, setInterview}){
     const [jobId, setJobId] = useState('')
-    const [interview, setInterview] = useState('')
+    //const [interview, setInterview] = useState('')
     const [questions, setQuestions] = useState([])
     const [questionNum, setQuestionNum] = useState(0)
     const [hide, setHide] = useState(false)
@@ -21,24 +21,34 @@ function TakeInterview({user}){
     const [alreadyTaken, setAlreadyTaken] = useState(false)
     const [recorded, setRecorded] = useState(false)
     const [started, setStarted] = useState(false)
+    const [disguise, setDisguise] = useState("block")
+    const [loading, setLoading] = useState(true)
 
     
     
-    let question = (questionNum) => questionNum < questions.length ? <QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide} recording={recording} setRecording={setRecording} recorded={recorded} setRecorded={setRecorded} /> : <div> 
+    let question = (questionNum) => questionNum < questions.length ? <div style={{display: disguise}}><QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide} recording={recording} setRecording={setRecording} recorded={recorded} setRecorded={setRecorded} /> </div>: <div> 
+                
                 <h3>Nice Job! You are all finished.</h3>
                 <Button color="primary" variant="contained"  onClick={()=> {
-                    history.push('/')
-                }}> Back to Home</Button>
+                    mock ? history.push('/viewmock'): history.push('/')
+                }}> {mock ? 'View Mock Interview':'Back to Home'}</Button>
             </div>
-     
+    
     const history = useHistory()
 
 
     const params = useParams()
 
-
+    useEffect(()=>{
+        if (mock){
+            setJobId(8)
+        }
+        setInterview('')
+        setLoading(false)
+    }, [])
 
     useEffect(()=>{
+        
         jobId &&  fetch(`/api/jobs/${jobId}`).then(res => res.json()).then(data => {
             setJobHeader('Interview to be a ' + data.title + ' for ' + data.user.name)
             setQuestions(data.questions)}).catch(()=> setFound(false))
@@ -75,12 +85,12 @@ function TakeInterview({user}){
         }).then(data => setInterview(data)).then(()=> setStarted(true))
     }
 
-    useEffect(()=>{
-        console.log(recording)
-    }, [recording])
+   
 
     useEffect(
-      () => setJobId(params.jobId),
+      () => {
+          if (params.jobId){setJobId(params.jobId)}
+          },
       [jobId, params.jobId, setJobId]
     );
     useEffect(()=>{
@@ -89,12 +99,12 @@ function TakeInterview({user}){
     return (
 
         <div className='center start' style={{color: 'white'}}>
-            <h1>{jobHeader}</h1>
-           { questions && found && !alreadyTaken && questionNum < questions.length && <p> Question Number {questionNum + 1} of {questions.length}</p>}
+            {!loading && <h1>{jobHeader}</h1>}
+           { interview &&  questions && found && !alreadyTaken && questionNum < questions.length && <p> Question Number {questionNum + 1} of {questions.length}</p>}
     
             
 
-           {found && questionNum === 0 && !recording && !recorded && !started && <Button className='bigbutton' sx={{bgcolor: 'white', color: 'black'}} onClick={()=> setOpen(true)}  ><h2 className='black'>Start Interview</h2></Button>}
+           {!loading && found && questionNum === 0 && !recording && !recorded && !started && <Button className='bigbutton' sx={{bgcolor: 'white', color: 'black'}} onClick={()=> setOpen(true)}  ><h2 className='black'>Start Interview</h2></Button>}
              {/* <Button  sx={{ bgcolor: 'white', color: 'black'}}  onClick={()=> {
                 setQuestionNum(questionNum => questionNum + 1)
                 setHide(false) 
@@ -105,9 +115,20 @@ function TakeInterview({user}){
 
               {
                 interview && questions && questionNum !== questions.length && !recording && recorded && <Button  sx={{ bgcolor: 'white', color: 'black'}}  onClick={()=> {
-                setQuestionNum(questionNum => questionNum + 1)
+
+                
                 setHide(false) 
                 setRecorded(false)
+                if (questionNum === questions.length - 1 ){
+                    setDisguise('none')
+                    setTimeout(()=>{
+                        setQuestionNum(questionNum => questionNum + 1)
+                    }, 900)
+                }
+                else{
+                    setQuestionNum(questionNum => questionNum + 1)
+
+                }
                 } }  >Next Question</Button>
             }
 

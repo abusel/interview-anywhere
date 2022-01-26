@@ -12,7 +12,7 @@ import {useHistory} from 'react-router-dom'
 
 
 
-function ViewInterview({interview, setInterview}){
+function ViewInterview({interview, setInterview, mock, user, setUser}){
     const [job, setJob] = useState('')
     const [questionAnswer, setQuestionAnswer] = useState([])
     const params = useParams();
@@ -24,13 +24,22 @@ function ViewInterview({interview, setInterview}){
 
 
     useEffect(()=>{
-        fetch(`/api/interviews/${params.interviewId}`).then(r => r.json()).then(data => setInterview(data))
+        if (params.interviewId){fetch(`/api/interviews/${params.interviewId}`).then(r => r.json()).then(data => setInterview(data))}
         // setTimeout(()=>{
         //     setSource('https://res.cloudinary.com/abusel/video/upload/v1642207765/cyc14yiq9cg4zevqgkbn.mkv')
         // }, 6000)
+        if(mock){
+            
+            console.log(user.interviews)
+             interview ? fetch(`/api/interviews/${interview.id}`).then(r => r.json()).then(data => setInterview(data)): fetch(`/api/interviews/${user.interviews[0].id}`).then(r => r.json()).then(data => setInterview(data))
+        }
         
         
     }, [])
+
+    useEffect(()=>{
+        console.log(interview)
+    },[])
 
     // useEffect(()=>{
     //     if (questionAnswer) { 
@@ -113,7 +122,15 @@ function ViewInterview({interview, setInterview}){
                 </Accordion>
                 )}
             })}
+             {mock && <Button className='center' color="primary" variant="contained" style={{padding: '5px'}} onClick={()=> {
+
+                    fetch(`/api/interviews/${interview.id}`,{
+                        method: 'DELETE'
+                    }).then(()=> history.push('/'))
+                    
+                }}> Back to Home</Button>}
         </div>
+       
         </div>
 
        
