@@ -1,4 +1,6 @@
 class Api::InterviewsController < ApplicationController
+    before_action :authorize, only: [:create, :destroy]
+    
     def index
         interviews = Interview.all
         render json: interviews

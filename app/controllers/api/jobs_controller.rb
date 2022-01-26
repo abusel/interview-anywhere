@@ -1,4 +1,6 @@
 class Api::JobsController < ApplicationController
+    before_action :authorize, only: [:create, :destroy]
+
     def index
         jobs = Job.all
         render json: jobs, status: :ok

@@ -1,5 +1,7 @@
 class Api::QuestionsController < ApplicationController
 
+    before_action :authorize, only: [:create]
+
     def index
         questions = Question.all
         render json: questions
