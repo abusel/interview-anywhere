@@ -58,7 +58,6 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
             <ConfirmDelete open={open} setOpen={setOpen} job={job}/>
             <h2>{job.title}</h2>
             <h3>Interview Code: {job.id}</h3>
-            <h4> Link: http://localhost:4000/interview/{job.id}</h4>
             {!adding && <Button onClick={()=>setOpen(true)}>Delete Job Posting
                 <DeleteIcon/>
             </Button>}
