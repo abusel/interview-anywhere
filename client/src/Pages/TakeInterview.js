@@ -41,7 +41,7 @@ function TakeInterview({user, mock, interview, setInterview}){
 
     useEffect(()=>{
         if (mock){
-            setJobId(1)
+            setJobId(8)
         }
         setInterview('')
         setLoading(false)
