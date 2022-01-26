@@ -41,11 +41,20 @@ function TakeInterview({user, mock, interview, setInterview}){
 
     useEffect(()=>{
         if (mock){
-            setJobId(8)
+            setJobId(1)
         }
         setInterview('')
         setLoading(false)
     }, [])
+
+    useEffect(()=>{
+        if (mock && user.interviews[0]){
+            fetch(`/api/interviews/${user.interviews[0].id}`, {
+                method: 'DELETE'
+            })
+        }
+        console.log(user)
+    }, [user, loading])
 
     useEffect(()=>{
         

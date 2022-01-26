@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import HomeIcon from '@mui/icons-material/Home';
 import AppsIcon from '@mui/icons-material/Apps';
 import AddIcon from '@mui/icons-material/Add';
+import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 
 
 function NavDrawer({state, setState, toggleDrawer, logoutFunc, user}){
@@ -63,6 +64,15 @@ function NavDrawer({state, setState, toggleDrawer, logoutFunc, user}){
                   { <AddIcon />}
                 </ListItemIcon>
                 <ListItemText primary={'Create a Job'} />
+              </ListItem>}
+
+              {user.is_company && <ListItem button key={'Take Mock Interview'} onClick={()=> {
+                history.push('/mock')
+            }}>
+                <ListItemIcon>
+                  { <VideoCameraFrontIcon />}
+                </ListItemIcon>
+                <ListItemText primary={'Take Mock Interview'} />
               </ListItem>}
 
               

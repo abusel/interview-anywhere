@@ -122,7 +122,7 @@ function ViewInterview({interview, setInterview, mock, user, setUser}){
                 </Accordion>
                 )}
             })}
-             {mock && <Button className='center' color="primary" variant="contained" style={{padding: '5px'}} onClick={()=> {
+             {mock && <Button className='center' color="primary" variant="contained" style={{marginTop: '50px'}} onClick={()=> {
 
                     fetch(`/api/interviews/${interview.id}`,{
                         method: 'DELETE'
