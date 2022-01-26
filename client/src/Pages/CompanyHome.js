@@ -20,6 +20,13 @@ function CompanyHome({user,setJob, setInterview}){
     const [recentInterviews, setRecentInterviews] = useState([])
     let history = useHistory()
     console.log(jobs)
+    function titleCase(str) {
+  str = str.toLowerCase().split(' ');
+  for (var i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+  }
+  return str.join(' ');
+}
 
 
     useEffect(() => {
@@ -31,7 +38,7 @@ function CompanyHome({user,setJob, setInterview}){
       }, [user]);
     return (
         <>
-        <h2> Welcome {user.name}</h2>
+        <h2 style={{marginLeft: '5%'}}> Welcome {user.name}</h2>
         <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
         
             <div >
@@ -50,7 +57,7 @@ function CompanyHome({user,setJob, setInterview}){
                         <ListItemIcon> 
                             <WorkIcon/>
                         </ListItemIcon>
-                        <ListItemText primary={job.title} secondary={job.users.length + ' Applicants'}/>
+                        <ListItemText primary={titleCase(job.title)} secondary={job.users.length + ' Applicants'}/>
                    </ListItemButton>
                    </ListItem>
                     })}</List>
@@ -82,7 +89,7 @@ function CompanyHome({user,setJob, setInterview}){
                         <ListItemIcon> 
                             <AssignmentIndIcon/>
                         </ListItemIcon>
-                        <ListItemText primary={interview.user.name} secondary={"Interview for " + interview.job.title}/>
+                        <ListItemText primary={titleCase(interview.user.name)} secondary={"Interview for " + titleCase(interview.job.title)}/>
                    </ListItemButton>
                    </ListItem>
                     })}</List>

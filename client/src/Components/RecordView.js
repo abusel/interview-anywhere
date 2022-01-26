@@ -135,7 +135,7 @@ function RecordView({type, job,  post, questions, setQuestions, recorded, setRec
                                      testRef.current.src = mediaBlobUrl
 
 
-                      type === 'q2' && setHasRecorded(true)
+                      setHasRecorded(true)
                       }}>Stop Recording</Button>}
                     <Button color="primary" variant="outlined" ref={liveRef} style={{display: 'none'}} onClick={()=> {
 

@@ -65,7 +65,7 @@ function NavBar({logoutFunc, user}){
             >
               <MenuIcon onClick={toggleDrawer('left', true)}/>
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={()=> {
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1, cursor: 'pointer', fontWeight: '600' }} onClick={()=> {
                 history.push('/')
             }
             }>

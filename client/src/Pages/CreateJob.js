@@ -1,7 +1,11 @@
 import CreateQuestion from '../Components/CreateQuestion';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 function CreateJob({user, job, setJob}){
+
+    useEffect(()=> {
+        setJob('')
+    }, [])
 
 
     return (

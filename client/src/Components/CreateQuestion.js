@@ -21,6 +21,7 @@ export default function CreateQuestion({setJob, job, user}) {
   const [jobTitle, setJobTitle] = useState('')
   const [post, setPost] = useState(false)
   const [recorded, setRecorded] = useState(false)
+  const [hasRecorded, setHasRecorded] = useState(false)
 
   let history = useHistory()
 
@@ -87,7 +88,15 @@ export default function CreateQuestion({setJob, job, user}) {
   
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+
+    if (activeStep === 0){
+      history.push('/')
+    }
+    else{
+          setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
+
+
   };
 
   const handleSkip = () => {
@@ -129,7 +138,7 @@ export default function CreateQuestion({setJob, job, user}) {
 
 
 
-    {activeStep > 1 && <RecordView type='q1' job={job} post={post} recorded={recorded} setRecorded={setRecorded}/>}
+    {activeStep > 1 && <RecordView type='q1' job={job} post={post} recorded={recorded} setRecorded={setRecorded} hasRecorded={hasRecorded} setHasRecorded={setHasRecorded}/>}
     <Box sx={{ width: '90vw', position: 'Absolute', bottom: '5%', left: '5vw'  }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
@@ -166,7 +175,7 @@ export default function CreateQuestion({setJob, job, user}) {
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               style={{color: 'white'}}
-              disabled={activeStep === 0}
+              // disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
             >

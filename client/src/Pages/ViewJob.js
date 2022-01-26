@@ -25,6 +25,14 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
     const [recorded, setRecorded] = useState(false)
     const [hasRecorded, setHasRecorded] = useState(false)
 
+    function titleCase(str) {
+  str = str.toLowerCase().split(' ');
+  for (var i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+  }
+  return str.join(' ');
+}
+
 
     
     
@@ -54,14 +62,14 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
     }, [job])
   
     return(
-        <div>
-            <ConfirmDelete open={open} setOpen={setOpen} job={job}/>
-            <h2>{job.title}</h2>
+        <div >
+           <div style={{marginLeft: '5%'}}> <ConfirmDelete open={open} setOpen={setOpen} job={job}/>
+            <h2 >{titleCase(job.title)}</h2>
             <h3>Interview Code: {job.id}</h3>
             {!adding && <Button onClick={()=>setOpen(true)}>Delete Job Posting
                 <DeleteIcon/>
             </Button>}
-            {adding && <Button  variant='outlined' onClick={()=> history.push(`/${job.id}`)}> Finish Adding Questions</Button>}
+            {adding && <Button  variant='outlined' onClick={()=> history.push(`/${job.id}`)}> Finish Adding Questions</Button>}</div>
 
 
 
@@ -109,7 +117,7 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
             
             </div> : <>
              
-                {interviews[0] && <h3>View Interviews:</h3>}
+                {interviews[0] && <h3 style={{marginLeft: '5%'}}>View Interviews:</h3>}
                 {/* {
                     <ul>
                         {
@@ -126,7 +134,7 @@ function ViewJob({job, setJob, adding, interview, setInterview, setAdding}){
                 } */}
 
                 {
-                     interviews[0] && <div style={{display: 'flex'}}> <Autocomplete
+                     interviews[0] && <div style={{display: 'flex', marginLeft: '5%'}}> <Autocomplete
                      disableClearable
                      onChange={(e, newValue)=> {
                             setInterview(newValue)
