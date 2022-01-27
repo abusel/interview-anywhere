@@ -5,6 +5,7 @@ import QuestionAnswer from '../Components/QuestionAnswer';
 import InterviewRulesPop from '../Components/InterviewRulesPop'
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import {useHistory} from 'react-router-dom'
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 function TakeInterview({user, mock, interview, setInterview}){
@@ -26,8 +27,7 @@ function TakeInterview({user, mock, interview, setInterview}){
 
     
     
-    let question = (questionNum) => questionNum < questions.length ? <div style={{display: disguise}}><QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide} recording={recording} setRecording={setRecording} recorded={recorded} setRecorded={setRecorded} /> </div>: <div> 
-                
+    let question = (questionNum) => questionNum < questions.length ? <> <div style={{display: disguise}}><QuestionAnswer interview={interview} question={questions[questionNum]} test={questionNum} hide={hide} setHide={setHide} recording={recording} setRecording={setRecording} recorded={recorded} setRecorded={setRecorded} /> </div> <div style={{display: disguise === 'block' ? 'none' : 'block'}}>  <CircularProgress/></div></>: <div> 
                 <h3>Nice Job! You are all finished.</h3>
                 <Button color="primary" variant="contained"  onClick={()=> {
                     mock ? history.push('/viewmock'): history.push('/')
@@ -132,7 +132,7 @@ function TakeInterview({user, mock, interview, setInterview}){
                     setDisguise('none')
                     setTimeout(()=>{
                         setQuestionNum(questionNum => questionNum + 1)
-                    }, 900)
+                    }, 1900)
                 }
                 else{
                     setQuestionNum(questionNum => questionNum + 1)
